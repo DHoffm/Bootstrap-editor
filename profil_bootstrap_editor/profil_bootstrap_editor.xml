@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="editors" method="upgrade">
+  <name>PLG_PROFIL_BOOTSTRAP_EDITOR</name>
+  <author>David Hoffmann</author>
+  <creationDate>June 2014</creationDate>
+  <copyright>Copyright (c) 2014 Profil PR &amp; Werbeagentur All rights reserved.</copyright>
+  <license>GNU/GPL license: http://www.gnu.org/copyleft/gpl.html</license>
+  <authorEmail>web@profilpr.de</authorEmail>
+  <authorUrl>Profilpr</authorUrl>
+  <version>1.0</version>
+  <description>PLG_PROFIL_BOOTSTRAP_EDITOR_DESCRIPTION</description>
+  <files>
+    <filename plugin="profil_bootstrap_editor">profil_bootstrap_editor.php</filename>
+    <filename>index.html</filename>
+    <filename>language/en-GB/en-GB.plg_profil_bootstrap_editor.sys.ini</filename>
+    <filename>language/de-DE/de-DE.plg_profil_bootstrap_editor.sys.ini</filename>
+    <folder>language</folder>
+    <folder>js</folder>
+  </files>
+  <languages folder="language">
+    <language tag="en-GB">en-GB/en-GB.plg_profil_bootstrap_editor.ini</language>
+    <language tag="en-GB">en-GB/en-GB.plg_profil_bootstrap_editor.sys.ini</language>
+    <language tag="de-DE">de-DE/de-DE.plg_profil_bootstrap_editor.ini</language>
+    <language tag="de-DE">de-DE/de-DE.plg_profil_bootstrap_editor.sys.ini</language>
+  </languages>
+</extension>

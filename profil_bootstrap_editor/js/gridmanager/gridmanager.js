@@ -232,9 +232,9 @@
               // Show the template controls
               gm.$el.find("#gm-addnew").show();
               // Sort Rows First
-              gm.activateRows(rows); 
+              gm.activateRows(rows);
               // Now Columns
-              gm.activateCols(cols);  
+              gm.activateCols(cols);
               // Make Rows sortable
               canvas.sortable({
                 items: gm.options.rowSelector, 
@@ -310,7 +310,7 @@
 
             gm.log("- deInitCanvas Running");
             // Hide template control
-            gm.$el.find("#gm-addnew").hide();  
+            gm.$el.find("#gm-addnew").hide();
             // Sort Rows First
             gm.deactivateRows(rows); 
             // Now Columns
@@ -367,7 +367,7 @@
                 row.append(gm.createCol(val));
               });
              row.prepend(gm.toolFactory(gm.options.rowButtonsPrepend))
-                .append(gm.toolFactory(gm.options.rowButtonsPrepend));
+                .append(gm.toolFactory(gm.options.rowButtonsAppend));
                 gm.log("++ Created Row"); 
           return row;
         };
@@ -506,7 +506,7 @@
               gm.$el.on("click", string, function(e){ 
                 gm.log("Clicked " + string); 
                 canvas.prepend(gm.createRow(colWidths));   
-                gm.reset();
+                //gm.reset();
                 e.preventDefault();  
             }); 
         };
@@ -587,8 +587,8 @@
         */
         gm.reset=function(){ 
             gm.log("~~RESET~~");
-            gm.deinitCanvas();  
-            gm.initCanvas();  
+            gm.deinitCanvas();
+            gm.initCanvas();
         };
 
         /*

@@ -41,8 +41,38 @@
 #gm-canvas div.gm-tools label, #gm-canvas div.gm-tools input {font-size:14px;}
 #gm-canvas textarea {width:100%; height: 100%;}
 
-.gm-editing, #gm-controls .row {
-	margin-left: 0!important;
-	margin-right: 0!important;
+#gm-canvas .row {
+	margin-left: 0px!important;
+	margin-right: 0px!important;
+}
+
+#gm-canvas .glyphicon-trash{
+	color: #d9534f;
+}
+
+#gm-controls .row {
+	margin-left: -15px!important;
+	margin-right: -15px!important;
+}
+
+#gm-controls .btn {
+	line-height: 19px;
+}
+
+.editor-gridmanager *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+
+.gm-editing {
+	cursor: move;
+}
+
+.gm-editholder {
+	cursor: text;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	padding: 15px 0;
+}
+
+.gm-tools a:hover, .gm-tools a:focus {
+	text-decoration: none;
 }
  

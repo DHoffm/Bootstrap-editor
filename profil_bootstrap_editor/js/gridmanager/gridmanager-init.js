@@ -11,7 +11,7 @@
   $(document).ready(function()
   {
     //$('.editor').css('display', 'none');
-
+    /*
     var tinyMceConfig = {
       mode : "exact",
       theme : "modern",
@@ -24,17 +24,19 @@
       setup : function(editor) {
         tinyMceMouseLeave(editor);
       }
-    };
-    
-    var gm = $(".editor-gridmanager").gridmanager({ debug: 1, tinymce: {config:  tinyMceConfig }}).data('gridmanager');
+    };*/
+    console.log(profil_bootstrap_editor_tinymce_options);
+    if (typeof profil_bootstrap_editor_tinymce_options !== 'undefined') {
+      var gm = $(".editor-gridmanager").gridmanager({ debug: 1, tinymce: {config:  profil_bootstrap_editor_tinymce_options }}).data('gridmanager');
 
-    function tinyMceMouseLeave(editor) {
-      editor.on('mouseleave', function(e) {
-        if (editor.id != 'jform_articletext') {
-          var output = gm.deinitCanvas(true);
-          $('#jform_articletext').val(output);
-        }
-      });
+      function tinyMceMouseLeave(editor) {
+        editor.on('mouseleave', function(e) {
+          if (editor.id != 'jform_articletext') {
+            var output = gm.deinitCanvas(true);
+            $('#jform_articletext').val(output);
+          }
+        });
+      }
     }
   })
 })(jQuery);

@@ -20,12 +20,13 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     $doc->addScriptVersion(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.js');
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-init.js');
-    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/grindmaster-bootstrap-grid.min.css');
+    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
+    $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.css');
   }
 
   /**
-   * Inserts html code into the editor
+   * Customized copy of onInit() from plugins/editors/tinymce/tinymce.php
    *
    * @param   string  $name  The name of the editor
    *
@@ -34,47 +35,41 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
   public function loadTinyMceJSConfig() {
     $language = JFactory::getLanguage();
 
-    // get tinymce options
+    // load tinymce plugins
     $plugin = JPluginHelper::getPlugin('editors', 'tinymce');
+    // get plugins parameters
     $params = new JRegistry($plugin->params);
+    // build tinymce options array for js
     $tinymce_options = array();
-    $tinymce_options['mode'] = $params->get('mode', 1);
 
+    $tinymce_options['mode'] = $params->get('mode', 1);
     $tinymce_options['theme'] = 'modern';
     $tinymce_options['skin'] = $params->get('skin', '0');
 
-    switch ($tinymce_options['skin'])
-    {
+    switch ($tinymce_options['skin']) {
       case '0':
       default:
         $tinymce_options['skin'] = "lightgray";
     }
 
     $tinymce_options['entity_encoding'] = $params->get('entity_encoding', 'raw');
-
     $tinymce_options['langMode'] = $params->get('lang_mode', 0);
     $tinymce_options['langPrefix'] = $params->get('lang_code', 'en');
 
-    if ($tinymce_options['langMode'])
-    {
-      if (file_exists(JPATH_ROOT . "/media/editors/tinymce/langs/" . $language->getTag() . ".js"))
-      {
+    if ($tinymce_options['langMode']) {
+      if (file_exists(JPATH_ROOT . "/media/editors/tinymce/langs/" . $language->getTag() . ".js")) {
         $tinymce_options['langPrefix'] = $language->getTag();
       }
-      elseif (file_exists(JPATH_ROOT . "/media/editors/tinymce/langs/" . substr($language->getTag(), 0, strpos($language->getTag(), '-')) . ".js"))
-      {
+      elseif (file_exists(JPATH_ROOT . "/media/editors/tinymce/langs/" . substr($language->getTag(), 0, strpos($language->getTag(), '-')) . ".js")) {
         $tinymce_options['langPrefix'] = substr($language->getTag(), 0, strpos($language->getTag(), '-'));
-      }
-      else
-      {
+      } else {
         $tinymce_options['langPrefix'] = "en";
       }
     }
 
     $tinymce_options['text_direction'] = 'ltr';
 
-    if ($language->isRTL())
-    {
+    if ($language->isRTL()) {
       $tinymce_options['text_direction'] = 'rtl';
     }
 
@@ -98,48 +93,33 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     $tinymce_options['templates_path'] = JPATH_SITE . '/templates';
 
     // Loading of css file for 'styles' dropdown
-    if ( $tinymce_options['content_css_custom'] )
-    {
+    if ( $tinymce_options['content_css_custom'] ) {
       // If URL, just pass it to $content_css
-      if (strpos($tinymce_options['content_css_custom'], 'http') !== false)
-      {
+      if (strpos($tinymce_options['content_css_custom'], 'http') !== false) {
         $tinymce_options['content_css'] = '"' . $tinymce_options['content_css_custom'] . '"';
-      }
-
       // If it is not a URL, assume it is a file name in the current template folder
-      else
-      {
+      } else {
         $tinymce_options['content_css'] = '"' . JUri::root() . 'templates/' . $tinymce_options['template'] . '/css/' . $tinymce_options['content_css_custom'] . '"';
 
         // Issue warning notice if the file is not found (but pass name to $content_css anyway to avoid TinyMCE error
-        if (!file_exists($tinymce_options['templates_path'] . '/' . $tinymce_options['template'] . '/css/' . $tinymce_options['content_css_custom']))
-        {
+        if (!file_exists($tinymce_options['templates_path'] . '/' . $tinymce_options['template'] . '/css/' . $tinymce_options['content_css_custom'])) {
           $msg = sprintf(JText::_('PLG_TINY_ERR_CUSTOMCSSFILENOTPRESENT'), $tinymce_options['content_css_custom']);
           JLog::add($msg, JLog::WARNING, 'jerror');
         }
       }
-    }
-    else
-    {
+    } else {
       // Process when use_content_css is Yes and no custom file given
-      if ($tinymce_options['use_content_css'])
-      {
+      if ($tinymce_options['use_content_css']) {
         // First check templates folder for default template
         // if no editor.css file in templates folder, check system template folder
-        if (!file_exists($tinymce_options['templates_path'] . '/' . $tinymce_options['template'] . '/css/editor.css'))
-        {
+        if (!file_exists($tinymce_options['templates_path'] . '/' . $tinymce_options['template'] . '/css/editor.css')) {
           // If no editor.css file in system folder, show alert
-          if (!file_exists($tinymce_options['templates_path'] . '/system/css/editor.css'))
-          {
+          if (!file_exists($tinymce_options['templates_path'] . '/system/css/editor.css')) {
             JLog::add(JText::_('PLG_TINY_ERR_EDITORCSSFILENOTPRESENT'), JLog::WARNING, 'jerror');
-          }
-          else
-          {
+          } else {
             $tinymce_options['content_css'] = '"' . JUri::root() . 'templates/system/css/editor.css"';
           }
-        }
-        else
-        {
+        } else {
           $tinymce_options['content_css'] = '"' . JUri::root() . 'templates/' . $tinymce_options['template'] . '/css/editor.css"';
         }
       }
@@ -147,28 +127,22 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
 
     $tinymce_options['relative_urls'] = $params->get('relative_urls', '1');
 
-    if ($tinymce_options['relative_urls'])
-    {
+    if ($tinymce_options['relative_urls']) {
       // Relative
       $tinymce_options['relative_urls'] = "true";
-    }
-    else
-    {
+    } else {
       // Absolute
       $tinymce_options['relative_urls'] = "false";
     }
 
     $tinymce_options['newlines'] = $params->get('newlines', 0);
 
-    if ($tinymce_options['newlines'])
-    {
+    if ($tinymce_options['newlines']) {
       // Break
       $tinymce_options['force_br_newlines'] = true;
       $tinymce_options['force_p_newlines'] = false;
       $tinymce_options['forced_root_block'] = '';
-    }
-    else
-    {
+    } else {
       // Paragraph
       $tinymce_options['force_br_newlines'] = false;
       $tinymce_options['force_p_newlines'] = true;
@@ -185,24 +159,18 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Image advanced options
     $tinymce_options['image_advtab'] = $params->get('image_advtab', 1);
 
-    if ($tinymce_options['image_advtab'])
-    {
+    if ($tinymce_options['image_advtab']) {
       $tinymce_options['image_advtab'] = "true";
-    }
-    else
-    {
+    } else {
       $tinymce_options['image_advtab'] = "false";
     }
 
     // The param is true false, so we turn true to both rather than showing vertical resize only
     $tinymce_options['resizing'] = $params->get('resizing', '1');
 
-    if ($tinymce_options['resizing'] || $tinymce_options['resizing'] == 'true')
-    {
+    if ($tinymce_options['resizing'] || $tinymce_options['resizing'] == 'true') {
       $tinymce_options['resize'] = 'both';
-    }
-    else
-    {
+    } else {
       $tinymce_options['resize'] = 'false';
     }
 
@@ -220,8 +188,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Alignment buttons
     $tinymce_options['alignment'] = $params->get('alignment', 1);
 
-    if ($tinymce_options['alignment'])
-    {
+    if ($tinymce_options['alignment']) {
       $tinymce_options['toolbar1_add'][] = '|';
       $tinymce_options['toolbar1_add'][] = 'alignleft';
       $tinymce_options['toolbar1_add'][] = 'aligncenter';
@@ -237,8 +204,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Fonts
     $tinymce_options['fonts'] = $params->get('fonts', 1);
 
-    if ($tinymce_options['fonts'])
-    {
+    if ($tinymce_options['fonts']) {
       $tinymce_options['toolbar1_add'][] = 'fontselect';
       $tinymce_options['toolbar1_add'][] = 'fontsizeselect';
     }
@@ -246,8 +212,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Search & replace
     $tinymce_options['searchreplace'] = $params->get('searchreplace', 1);
 
-    if ($tinymce_options['searchreplace'])
-    {
+    if ($tinymce_options['searchreplace']) {
       $tinymce_options['plugins'][]  = 'searchreplace';
       $tinymce_options['toolbar2_add'][] = 'searchreplace';
     }
@@ -266,8 +231,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Insert date and/or time plugin
     $tinymce_options['insertdate'] = $params->get('insertdate', 1);
 
-    if ($tinymce_options['insertdate'])
-    {
+    if ($tinymce_options['insertdate']) {
       $tinymce_options['plugins'][]  = 'insertdatetime';
       $tinymce_options['toolbar4_add'][] = 'inserttime';
     }
@@ -275,8 +239,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Link plugin
     $tinymce_options['link'] = $params->get('link', 1);
 
-    if ($tinymce_options['link'])
-    {
+    if ($tinymce_options['link']) {
       $tinymce_options['plugins'][]  = 'link';
       $tinymce_options['toolbar2_add'][] = 'link';
       $tinymce_options['toolbar2_add'][] = 'unlink';
@@ -290,8 +253,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Colours
     $tinymce_options['colours'] = $params->get('colours', 1);
 
-    if ($tinymce_options['colours'])
-    {
+    if ($tinymce_options['colours']) {
       $tinymce_options['toolbar2_add'][] = '|';
       $tinymce_options['toolbar2_add'][] = 'forecolor,backcolor';
     }
@@ -299,8 +261,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Fullscreen
     $tinymce_options['fullscreen'] = $params->get('fullscreen', 1);
 
-    if ($tinymce_options['fullscreen'])
-    {
+    if ($tinymce_options['fullscreen']) {
       $tinymce_options['plugins'][]  = 'fullscreen';
       $tinymce_options['toolbar2_add'][] = '|';
       $tinymce_options['toolbar2_add'][] = 'fullscreen';
@@ -309,8 +270,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Table
     $tinymce_options['table'] = $params->get('table', 1);
 
-    if ($tinymce_options['table'])
-    {
+    if ($tinymce_options['table']) {
       $tinymce_options['plugins'][]  = 'table';
       $tinymce_options['toolbar3_add'][] = 'table';
       $tinymce_options['toolbar3_add'][] = '|';
@@ -324,8 +284,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Emotions
     $tinymce_options['smilies'] = $params->get('smilies', 1);
 
-    if ($tinymce_options['smilies'])
-    {
+    if ($tinymce_options['smilies']) {
       $tinymce_options['plugins'][]  = 'emoticons';
       $tinymce_options['toolbar3_add'][] = 'emoticons';
     }
@@ -333,8 +292,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Media plugin
     $tinymce_options['media'] = $params->get('media', 1);
 
-    if ($tinymce_options['media'])
-    {
+    if ($tinymce_options['media']) {
       $tinymce_options['plugins'][] = 'media';
       $tinymce_options['toolbar3_add'][] = 'media';
     }
@@ -342,28 +300,23 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Horizontal line
     $tinymce_options['hr'] = $params->get('hr', 1);
 
-    if ($tinymce_options['hr'])
-    {
+    if ($tinymce_options['hr']) {
       $tinymce_options['plugins'][]  = 'hr';
       $tinymce_options['elements'][] = 'hr[id|title|alt|class|width|size|noshade]';
       $tinymce_options['toolbar3_add'][] = 'hr';
-    }
-    else
-    {
+    } else {
       $tinymce_options['elements'][] = 'hr[id|class|title|alt]';
     }
 
     // RTL/LTR buttons
     $tinymce_options['directionality'] = $params->get('directionality', 1);
 
-    if ($tinymce_options['directionality'])
-    {
+    if ($tinymce_options['directionality']) {
       $tinymce_options['plugins'][] = 'directionality';
       $tinymce_options['toolbar3_add'][] = 'ltr rtl';
     }
 
-    if ($tinymce_options['extended_elements'] != "")
-    {
+    if ($tinymce_options['extended_elements'] != "") {
       $tinymce_options['elements'] = explode(',', $tinymce_options['extended_elements']);
     }
 
@@ -373,8 +326,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Paste
     $tinymce_options['paste'] = $params->get('paste', 1);
 
-    if ($tinymce_options['paste'])
-    {
+    if ($tinymce_options['paste']) {
       $tinymce_options['plugins'][]  = 'paste';
       $tinymce_options['toolbar4_add'][] = 'paste';
     }
@@ -384,8 +336,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Visualchars
     $tinymce_options['visualchars'] = $params->get('visualchars', 1);
 
-    if ($tinymce_options['visualchars'])
-    {
+    if ($tinymce_options['visualchars']) {
       $tinymce_options['plugins'][]  = 'visualchars';
       $tinymce_options['toolbar4_add'][] = 'visualchars';
     }
@@ -393,8 +344,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Visualblocks
     $tinymce_options['visualblocks'] = $params->get('visualblocks', 1);
 
-    if ($tinymce_options['visualblocks'])
-    {
+    if ($tinymce_options['visualblocks']) {
       $tinymce_options['plugins'][]  = 'visualblocks';
       $tinymce_options['toolbar4_add'][] = 'visualblocks';
     }
@@ -402,32 +352,27 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Non-breaking
     $tinymce_options['nonbreaking'] = $params->get('nonbreaking', 1);
 
-    if ($tinymce_options['nonbreaking'])
-    {
+    if ($tinymce_options['nonbreaking']) {
       $tinymce_options['plugins'][]  = 'nonbreaking';
-
       $tinymce_options['toolbar4_add'][] = 'nonbreaking';
     }
 
     // Blockquote
     $tinymce_options['blockquote'] = $params->get('blockquote', 1);
 
-    if ($tinymce_options['blockquote'])
-    {
+    if ($tinymce_options['blockquote']) {
       $tinymce_options['toolbar4_add'][] = 'blockquote';
     }
 
     // Template
     $tinymce_options['template'] = $params->get('template', 1);
 
-    if ($tinymce_options['template'])
-    {
+    if ($tinymce_options['template']) {
       $tinymce_options['plugins'][]  = 'template';
       $tinymce_options['toolbar4_add'][] = 'template';
 
       // Note this check for the template_list.js file will be removed in Joomla 4.0
-      if (is_file(JPATH_ROOT . "/media/editors/tinymce/templates/template_list.js"))
-      {
+      if (is_file(JPATH_ROOT . "/media/editors/tinymce/templates/template_list.js")) {
         // If using the legacy file we need to include and input the files the new way
         $str = file_get_contents(JPATH_ROOT . "/media/editors/tinymce/templates/template_list.js");
 
@@ -437,32 +382,26 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
         $tinymce_options['templates'] = array();
 
         // Set variables
-        foreach ($matches['0'] as $match)
-        {
+        foreach ($matches['0'] as $match) {
           preg_match_all('/\".*\"/', $match, $values);
           $result = trim($values["0"]["0"], '"');
           $final_result = explode(',', $result);
           $tinymce_options['templates'][] = array('title' => trim($final_result['0'], ' " '), 'description' => trim($final_result['2'], ' " ') . "', url: '" . JUri::root() . trim($final_result['1'], ' " '));
         }
-      }
-      else
-      {
+      } else {
         $tinymce_options['templates'][] = array(
           'title' => 'Layout', 'description' => 'HTMLLayout', 'url' => JUri::root() . 'media/editors/tinymce/templates/layout1.html',
           'title' => 'Simple snippet', 'description' => 'Simple HTML snippet', 'url' => JUri::root() . 'media/editors/tinymce/templates/snippet1.html',
         );
       }
-    }
-    else
-    {
+    } else {
       $tinymce_options['templates'] = '';
     }
 
     // Print
     $tinymce_options['print'] = $params->get('print', 1);
 
-    if ($tinymce_options['print'])
-    {
+    if ($tinymce_options['print']) {
       $tinymce_options['plugins'][] = 'print';
       $tinymce_options['toolbar4_add'][] = '|';
       $tinymce_options['toolbar4_add'][] = 'print';
@@ -472,8 +411,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Spellchecker
     $tinymce_options['spell'] = $params->get('spell', 0);
 
-    if ($tinymce_options['spell'])
-    {
+    if ($tinymce_options['spell']) {
       $tinymce_options['plugins'][] = 'spellchecker';
       $tinymce_options['toolbar4_add'][] = '|';
       $tinymce_options['toolbar4_add'][] = 'spellchecker';
@@ -482,46 +420,40 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
     // Wordcount
     $tinymce_options['wordcount']  = $params->get('wordcount', 1);
 
-    if ($tinymce_options['wordcount'])
-    {
+    if ($tinymce_options['wordcount']) {
       $tinymce_options['plugins'][] = 'wordcount';
     }
 
     // Advlist
     $tinymce_options['advlist']  = $params->get('advlist', 1);
 
-    if ($tinymce_options['advlist'])
-    {
+    if ($tinymce_options['advlist']) {
       $tinymce_options['plugins'][]  = 'advlist';
     }
 
     // Autosave
     $tinymce_options['autosave'] = $params->get('autosave', 1);
 
-    if ($tinymce_options['autosave'])
-    {
+    if ($tinymce_options['autosave']) {
       $tinymce_options['plugins'][]  = 'autosave';
     }
 
     // Context menu
     $tinymce_options['contextmenu'] = $params->get('contextmenu', 1);
 
-    if ($tinymce_options['contextmenu'])
-    {
+    if ($tinymce_options['contextmenu']) {
       $tinymce_options['plugins'][]  = 'contextmenu';
     }
 
     $tinymce_options['custom_plugin'] = $params->get('custom_plugin', '');
 
-    if ($tinymce_options['custom_plugin'] != "")
-    {
+    if ($tinymce_options['custom_plugin'] != "") {
       $tinymce_options['plugins'][] = $tinymce_options['custom_plugin'];
     }
 
     $tinymce_options['custom_button'] = $params->get('custom_button', '');
 
-    if ($tinymce_options['custom_button'] != "")
-    {
+    if ($tinymce_options['custom_button'] != "") {
       $tinymce_options['toolbar4_add'][] = $tinymce_options['custom_button'];
     }
 
@@ -542,16 +474,12 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
      * Shrink the buttons if not on a mobile or if mobile view is off.
      * If mobile view is on force into simple mode and enlarge the buttons
     **/
-    if (!$plugin->app->client->mobile)
-    {
+    $app  = JFactory::getApplication();
+    if (!$app->client->mobile) {
       $tinymce_options['toolbar_items_size'] = "small";
-    }
-    elseif ($tinymce_options['mobileVersion'] == false)
-    {
+    } elseif ($tinymce_options['mobileVersion'] == false) {
       $tinymce_options['toolbar_items_size'] = '';
-    }
-    else
-    {
+    } else {
       $tinymce_options['toolbar_items_size'] = '';
       $tinymce_options['mode'] = 0;
     }
@@ -699,17 +627,14 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
    */
   public function onDisplay($name, $content, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array()) {
     self::loadTinyMceJSConfig();
+    // add editor wrapper
     $editor = '<div class="editor-gridmanager">';
+    // attach article content
     $editor .= html_entity_decode($content);
     $editor .= '</div>';
+    // include hidden textarea for saving the content + bootstrap grid data
     $editor .= '<textarea name="' . $name . '" id="' . $id . '" cols="' . $col . '" rows="' . $row . '" style="width: ' . $width . '; height: ' . $height . ';">' . $content . '</textarea>';
     return $editor;
-  }
-
-  public function onContentPrepare($context, &$row, &$params, $page = 0) {
-    $doc = JFactory::getDocument();
-    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/grindmaster-bootstrap-grid.min.css');
-    var_dump("here");
   }
 }
 

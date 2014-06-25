@@ -6,30 +6,15 @@
  * @since       3.0
  */
 
-(function($)
-{
-  $(document).ready(function()
-  {
-    //$('.editor').css('display', 'none');
-    /*
-    var tinyMceConfig = {
-      mode : "exact",
-      theme : "modern",
-      skin : "lightgray",
-      schema: "html5",
-      inline_styles : true,
-      gecko_spellcheck : true,
-      relative_urls: true,
-      selector : '.gm-editholder-active',
-      setup : function(editor) {
-        tinyMceMouseLeave(editor);
-      }
-    };*/
-    console.log(profil_bootstrap_editor_tinymce_options);
+(function($) {
+  $(document).ready(function() {
     if (typeof profil_bootstrap_editor_tinymce_options !== 'undefined') {
+      // add save handler to tinymce editor
+      profil_bootstrap_editor_tinymce_options.setup = function(editor) {
+        profilBootstrapEditorTinyMceSave(editor);
+      }
       var gm = $(".editor-gridmanager").gridmanager({ debug: 1, tinymce: {config:  profil_bootstrap_editor_tinymce_options }}).data('gridmanager');
-
-      function tinyMceMouseLeave(editor) {
+      function profilBootstrapEditorTinyMceSave(editor) {
         editor.on('mouseleave', function(e) {
           if (editor.id != 'jform_articletext') {
             var output = gm.deinitCanvas(true);

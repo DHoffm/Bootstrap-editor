@@ -119,7 +119,6 @@
             // Make region editable
             }).on("click", ".gm-editholder", function(){ 
                 var rteRegion=$(this); 
-                console.log("region editable:" + rteRegion.attr("contenteditable"));
                 //if(!rteRegion.attr("contenteditable")){
                     gm.rteControl("stop"); 
                     $(".gm-editholder").removeClass('gm-editholder-active');
@@ -278,7 +277,6 @@
             var canvas=$('#gm-plain-output');
             var cols=canvas.find(gm.options.colSelector);
             var rows=canvas.find(gm.options.rowSelector);
-            console.log(canvas.html());
             // Sort Rows First
             gm.deactivateRows(rows); 
             // Now Columns

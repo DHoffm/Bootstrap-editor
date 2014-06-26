@@ -63,7 +63,7 @@
 
 .editor-gridmanager *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 
-.gm-editing {
+.gm-editing .gm-tools {
 	cursor: move;
 }
 
@@ -77,4 +77,3 @@
 .gm-tools a:hover, .gm-tools a:focus {
 	text-decoration: none;
 }
- 

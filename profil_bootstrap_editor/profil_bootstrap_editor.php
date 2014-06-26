@@ -486,62 +486,70 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
 
     switch ($tinymce_options['mode']) {
       case 0: /* Simple mode*/
-        $result = array(
-          'directionality' => $tinymce_options['text_direction'],
-          'selector' => '.gm-editholder-active',
-          'language' => $tinymce_options['langPrefix'],
-          'mode' => "specific_textareas",
-          'autosave_restore_when_empty' => false,
-          'skin' => $tinymce_options['skin'],
-          'theme' => $tinymce_options['theme'],
-          'schema' => "html5",
-          'menubar' => false,
-          'toolbar1' => "bold italics underline strikethrough | undo redo | bullist numlist",
-          'inline_styles' => true,
-          'gecko_spellcheck' => true,
-          'entity_encoding' => $tinymce_options['entity_encoding'],
-          'force_br_newlines' => $tinymce_options['force_br_newlines'],
-          'force_p_newlines' => $tinymce_options['force_p_newlines'],
-          'forced_root_block' => $tinymce_options['forced_root_block'],
-          'relative_urls' => $tinymce_options['relative_urls'],
-          'remove_script_host' => false,
-          'content_css' => $tinymce_options['content_css'],
-          'document_base_url' => JUri::root()
+        $config = array(
+          'tinymce' => array(
+            'config' => array(
+              'directionality' => $tinymce_options['text_direction'],
+              'selector' => '.gm-editholder-active',
+              'language' => $tinymce_options['langPrefix'],
+              'mode' => "specific_textareas",
+              'autosave_restore_when_empty' => false,
+              'skin' => $tinymce_options['skin'],
+              'theme' => $tinymce_options['theme'],
+              'schema' => "html5",
+              'menubar' => false,
+              'toolbar1' => "bold italics underline strikethrough | undo redo | bullist numlist",
+              'inline_styles' => true,
+              'gecko_spellcheck' => true,
+              'entity_encoding' => $tinymce_options['entity_encoding'],
+              'force_br_newlines' => $tinymce_options['force_br_newlines'],
+              'force_p_newlines' => $tinymce_options['force_p_newlines'],
+              'forced_root_block' => $tinymce_options['forced_root_block'],
+              'relative_urls' => $tinymce_options['relative_urls'],
+              'remove_script_host' => false,
+              'content_css' => $tinymce_options['content_css'],
+              'document_base_url' => JUri::root()
+            ),
+          ),
         );
         break;
       case 1:
       default: /* Advanced mode*/
         $toolbar1 = "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | formatselect | bullist numlist";
         $toolbar2 = "outdent indent | undo redo | link unlink anchor image code | hr table | subscript superscript | charmap";
-        $result = array (
-          'directionality' => $tinymce_options['text_direction'],
-          'language' => $tinymce_options['langPrefix'],
-          'mode' => 'specific_textareas',
-          'autosave_restore_when_empty' => false,
-          'skin' => $tinymce_options['skin'],
-          'theme' => $tinymce_options['theme'],
-          'schema' => 'html5',
-          'selector' => '.gm-editholder-active',
-          'inline_styles' => true,
-          'gecko_spellcheck' => true,
-          'entity_encoding' => $tinymce_options['entity_encoding'],
-          'extended_valid_elements' => $tinymce_options['elements'],
-          'force_br_newlines' => $tinymce_options['force_br_newlines'],
-          'force_p_newlines' => $tinymce_options['force_p_newlines'],
-          'forced_root_block' => $tinymce_options['forced_root_block'],
-          'invalid_elements' => $tinymce_options['invalid_elements'],
-          'plugins' => 'table link image code charmap autolink lists importcss',
-          'toolbar1' => $tinymce_options['toolbar1'],
-          'toolbar2' => $tinymce_options['toolbar2'],
-          'removed_menuitems' => 'newdocument',
-          'relative_urls' => $tinymce_options['relative_urls'],
-          'remove_script_host' => false,
-          'document_base_url' => JUri::root(),
-          'content_css' => $tinymce_options['content_css'],
-          'importcss_append' => true,
-          'resize' => $tinymce_options['resize'],
-          'height' => $tinymce_options['html_height'],
-          'width' => $tinymce_options['html_width'],
+        $config = array(
+          'tinymce' => array(
+            'config' => array(
+              'directionality' => $tinymce_options['text_direction'],
+              'language' => $tinymce_options['langPrefix'],
+              'mode' => 'specific_textareas',
+              'autosave_restore_when_empty' => false,
+              'skin' => $tinymce_options['skin'],
+              'theme' => $tinymce_options['theme'],
+              'schema' => 'html5',
+              'selector' => '.gm-editholder-active',
+              'inline_styles' => true,
+              'gecko_spellcheck' => true,
+              'entity_encoding' => $tinymce_options['entity_encoding'],
+              'extended_valid_elements' => $tinymce_options['elements'],
+              'force_br_newlines' => $tinymce_options['force_br_newlines'],
+              'force_p_newlines' => $tinymce_options['force_p_newlines'],
+              'forced_root_block' => $tinymce_options['forced_root_block'],
+              'invalid_elements' => $tinymce_options['invalid_elements'],
+              'plugins' => 'table link image code charmap autolink lists importcss',
+              'toolbar1' => $tinymce_options['toolbar1'],
+              'toolbar2' => $tinymce_options['toolbar2'],
+              'removed_menuitems' => 'newdocument',
+              'relative_urls' => $tinymce_options['relative_urls'],
+              'remove_script_host' => false,
+              'document_base_url' => JUri::root(),
+              'content_css' => $tinymce_options['content_css'],
+              'importcss_append' => true,
+              'resize' => $tinymce_options['resize'],
+              'height' => $tinymce_options['html_height'],
+              'width' => $tinymce_options['html_width'],
+            ),
+          ),
         );
       break;
 
@@ -560,51 +568,67 @@ class plgEditorprofil_bootstrap_editor extends JPlugin
         $tinymce_options['rel_list'][] = array('title' => 'Search', 'value' => 'search');
         $tinymce_options['rel_list'][] = array('title' => 'Tag', 'value' => 'tag');
 
-        $result = array (
-          'directionality' => $tinymce_options['text_direction'],
-          'language' => $tinymce_options['langPrefix'],
-          'mode' => 'specific_textareas',
-          'autosave_restore_when_empty' => false,
-          'skin' => $tinymce_options['skin'],
-          'theme' => $tinymce_options['theme'],
-          'schema' => 'html5',
-          'selector' => '.gm-editholder-active',
-          'inline_styles' => true,
-          'gecko_spellcheck' => true,
-          'entity_encoding' => $tinymce_options['entity_encoding'],
-          'extended_valid_elements' => $tinymce_options['elements'],
-          'force_br_newlines' => $tinymce_options['force_br_newlines'],
-          'force_p_newlines' => $tinymce_options['force_p_newlines'],
-          'forced_root_block' => $tinymce_options['forced_root_block'],
-          'invalid_elements' => $tinymce_options['invalid_elements'],
-          'plugins' => $tinymce_options['plugins'],
-          'toolbar1' => $tinymce_options['toolbar1'],
-          'toolbar2' => $tinymce_options['toolbar2'],
-          'toolbar3' => $tinymce_options['toolbar3'],
-          'toolbar4' => $tinymce_options['toolbar4'],
-          'removed_menuitems' => 'newdocument',
-          'relative_urls' => $tinymce_options['relative_urls'],
-          'remove_script_host' => false,
-          'document_base_url' => JUri::root(),
-          'rel_list' => $tinymce_options['rel_list'],
-          'templates' => $tinymce_options['templates'],
-          'content_css' => $tinymce_options['content_css'],
-          'importcss_append' => true,
-          'resize' => $tinymce_options['resize'],
-          'image_advtab' => $tinymce_options['image_advtab'],
-          'height' => $tinymce_options['html_height'],
-          'width' => $tinymce_options['html_width'],
+        $config = array(
+          'tinymce' => array(
+            'config' => array(
+              'directionality' => $tinymce_options['text_direction'],
+              'language' => $tinymce_options['langPrefix'],
+              'mode' => 'specific_textareas',
+              'autosave_restore_when_empty' => false,
+              'skin' => $tinymce_options['skin'],
+              'theme' => $tinymce_options['theme'],
+              'schema' => 'html5',
+              'selector' => '.gm-editholder-active',
+              'inline_styles' => true,
+              'gecko_spellcheck' => true,
+              'entity_encoding' => $tinymce_options['entity_encoding'],
+              'extended_valid_elements' => $tinymce_options['elements'],
+              'force_br_newlines' => $tinymce_options['force_br_newlines'],
+              'force_p_newlines' => $tinymce_options['force_p_newlines'],
+              'forced_root_block' => $tinymce_options['forced_root_block'],
+              'invalid_elements' => $tinymce_options['invalid_elements'],
+              'plugins' => $tinymce_options['plugins'],
+              'toolbar1' => $tinymce_options['toolbar1'],
+              'toolbar2' => $tinymce_options['toolbar2'],
+              'toolbar3' => $tinymce_options['toolbar3'],
+              'toolbar4' => $tinymce_options['toolbar4'],
+              'removed_menuitems' => 'newdocument',
+              'relative_urls' => $tinymce_options['relative_urls'],
+              'remove_script_host' => false,
+              'document_base_url' => JUri::root(),
+              'rel_list' => $tinymce_options['rel_list'],
+              'templates' => $tinymce_options['templates'],
+              'content_css' => $tinymce_options['content_css'],
+              'importcss_append' => true,
+              'resize' => $tinymce_options['resize'],
+              'image_advtab' => $tinymce_options['image_advtab'],
+              'height' => $tinymce_options['html_height'],
+              'width' => $tinymce_options['html_width'],
+            ),
+          ),
         );
         break;
     }
 
+    $bootstrap_mode = (int) $this->params->get('mode', 0);
+
+    // bootstrap 2, joomla 3.0 default
+    if ($bootstrap_mode == 0) {
+      $config['colClass'] = 'span';
+      $config['colSelector'] = 'div[class*=span]';
+      $config['rowClass'] = 'row-fluid';
+      $config['rowSelector'] = 'div.row-fluid';
+    // bootstrap 3, gridmanager default
+    } else {
+    }
+
     if (!empty($tinymce_options['toolbar_items_size'])) {
-      $result['toolbar_items_size'] = $tinymce_options['toolbar_items_size'];
+      $config['tinymce']['config']['toolbar_items_size'] = $tinymce_options['toolbar_items_size'];
     }
 
     $doc = JFactory::getDocument();
     // add tinymce js config
-    $js = 'var profil_bootstrap_editor_tinymce_options =' . json_encode( $result ) . ';';
+    $js = 'var profil_bootstrap_editor_gridmanager_options =' . json_encode( $config ) . ';';
     $doc->addScriptDeclaration($js);
   }
 

@@ -12,8 +12,6 @@
   <files>
     <filename plugin="profil_bootstrap_editor">profil_bootstrap_editor.php</filename>
     <filename>index.html</filename>
-    <filename>language/en-GB/en-GB.plg_profil_bootstrap_editor.sys.ini</filename>
-    <filename>language/de-DE/de-DE.plg_profil_bootstrap_editor.sys.ini</filename>
     <folder>language</folder>
     <folder>js</folder>
   </files>

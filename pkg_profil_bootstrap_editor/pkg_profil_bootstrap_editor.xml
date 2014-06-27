@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
  <extension type="package" version="3.0">
- <name>profil_bootstrap_editor</name>
+ <name>profil bootstrap editor package</name>
  <author>David Hoffmann</author>
  <creationDate>June 2014</creationDate>
  <packagename>profil_bootstrap_editor</packagename>
@@ -10,9 +10,9 @@
  <license>GNU/GPL license: http://www.gnu.org/copyleft/gpl.html</license>
  <packager>profilpr</packager>
  <packagerurl>http://www.profilpr.de/</packagerurl>
- <description>Control the profil bootstrap editor extensions.</description>
+ <description>This package installed the profil boostrap editor and the profil bootstrap content plugins.</description>
  <files folder="pkg_profil_bootstrap_editor">
-   <file type="plugin" id="profil_bootstrap_editor" group="editors">plg_profil_bootstrap_editor.zip</file>
-   <file type="plugin" id="profil_bootstrap_editor_content" group="content">plg_profil_bootstrap_editor_content.zip</file>
+   <file type="plugin" id="profil_bootstrap_editor" group="editors">profil_bootstrap_editor.zip</file>
+   <file type="plugin" id="profil_bootstrap_editor_content" group="content">profil_bootstrap_editor_content.zip</file>
  </files>
  </extension>

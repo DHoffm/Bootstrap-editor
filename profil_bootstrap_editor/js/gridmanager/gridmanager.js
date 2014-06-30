@@ -145,11 +145,11 @@
         }
 
         // Change Row ID via rowsettings
-      }).on("blur", "input.gm-rowSettingsID", function() {
+      }).on("input", "input.gm-rowSettingsID", function() {
         var row = $(this).closest(gm.options.rowSelector);
         row.attr("id", $(this).val());
         // Remove a class from a row via rowsettings
-      }).on("click", ".gm-toggleRowClass", function() {
+      }).on("click", ".gm-toggleRowClass", function(e) {
         var row = $(this).closest(gm.options.rowSelector);
         var theClass = $(this).text().trim();
         row.toggleClass(theClass);
@@ -158,7 +158,7 @@
         } else {
           $(this).removeClass(gm.options.gmDangerClass);
         }
-
+        e.preventDefault();
         // Add new column to existing row
       }).on("click", "a.gm-addColumn", function() {
         $(this).parent().after(gm.createCol(2));

@@ -625,6 +625,34 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     } else {
     }
 
+    // check for custom row classes
+    $row_classes = $this->params->get('rowClasses', 'example-class, test-class');
+
+    if (!empty($row_classes)) {
+      $config['rowCustomClasses'] = explode(',', trim($row_classes));
+    }
+
+    $row_presets = $this->params->get('rowPresets', '[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2],[2,8,2],[4,8],[8,4]');
+    // remove whitespaces
+    $row_presets = ltrim($row_presets);
+    // remove first bracket
+    $brace = ltrim($row_presets, '[');
+    // remove last bracket
+    $row_presets = rtrim($row_presets, ']');
+    // explode on brackets + comma
+    $controlButtons = explode('],[', $row_presets);
+    // explode childs
+    $finalArray = array();
+    if (!empty($controlButtons)) {
+      foreach ($controlButtons as $cKey => $cValue) {
+        $finalArray[] = explode(',', $cValue);
+      }
+    }
+
+    if (!empty($controlButtons)) {
+      $config['controlButtons'] = array_values($finalArray);
+    }
+
     $doc = JFactory::getDocument();
     // add tinymce js config
     $js = 'var profil_bootstrap_editor_gridmanager_options =' . json_encode( $config ) . ';';

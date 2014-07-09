@@ -6,15 +6,8 @@
  * Licensed under the MIT license.
  */
 
-/*
- * GridManager
- *
- *
- * Copyright (c) 2014 Tom King
- * Licensed under the MIT license.
- */
- #gm-controls {
-  margin:5px 0;
+#gm-controls {
+  margin: 5px 0;
 }
 #gm-controls button, #gm-controls a {
   font-size: 16px;
@@ -23,20 +16,24 @@
   min-height: 100px;
 }
 #gm-canvas .gm-editing {
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
-  box-shadow: inset 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  padding:4px 15px;
+  padding: 4px 15px;
   min-height: 30px;
+  margin-left: 0;
 }
 #gm-canvas .gm-editing-selected {
-  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(255, 0, 0, 1);
-  -moz-box-shadow: inset 0px 0px 5px 0px rgba(255, 0, 0, 1);
-  box-shadow: inset 0px 0px 5px 0px rgba(255, 0, 0, 1);
-  z-index: 1000;
+  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
+  -moz-box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
+  box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
+}
+#gm-canvas .gm-editing-active {
+  z-index: 9999;
+  position: relative;
 }
 #gm-canvas div.row.gm-editing, #gm-canvas div.row-fluid.gm-editing {
   padding: 5px;
@@ -44,19 +41,19 @@
   margin-bottom: 10px;
 }
 #gm-canvas div.gm-tools {
-  padding:3px;
+  padding: 3px 0;
   min-height: 30px;
-  display:block;
-  clear:both;
+  display: block;
+  clear: both;
 }
 #gm-canvas div.gm-tools a:hover {
   cursor: pointer;
 }
 #gm-canvas div.gm-tools label, #gm-canvas div.gm-tools input {
-  font-size:14px;
+  font-size: 14px;
 }
 #gm-canvas textarea {
-  width:100%;
+  width: 100%;
   height: 100%;
 }
 #gm-canvas .row {
@@ -66,17 +63,23 @@
 #gm-canvas .glyphicon-trash {
   color: #d9534f;
 }
+#gm-controls .glyphicon {
+  top: 3px;
+}
 #gm-controls .row {
   margin-left: -15px!important;
   margin-right: -15px!important;
 }
 #gm-controls .btn {
   line-height: 19px;
+  padding: 3px;
+  margin: 7px 0;
+  float: left;
 }
 .editor-gridmanager * {
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing:border-box;
-  box-sizing:border-box
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box
 }
 .gm-editing .gm-tools {
   cursor: move;
@@ -90,7 +93,12 @@
 .gm-tools a:hover, .gm-tools a:focus {
   text-decoration: none;
 }
-
 .editor-gridmanager-textarea {
   display: none!important;
+}
+.editor-gridmanager .mce-tinymce {}
+
+/* frontend fix */
+.item-page .icons .pull-right:after {
+  clear: both!important;
 }

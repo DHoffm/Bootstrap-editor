@@ -17,6 +17,19 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
    */
   public function onInit() {
     $doc = JFactory::getDocument();
+
+    JLoader::import( 'joomla.version' );
+    $version = new JVersion();
+    if (version_compare( $version->RELEASE, '2.5', '<=')) {
+      if(JFactory::getApplication()->get('jquery') !== true) {
+        // load jQuery here
+        $doc->addScriptVersion('https://code.jquery.com/jquery-1.11.0.min.js');
+        JFactory::getApplication()->set('jquery', true);
+      }
+    } else {
+        JHtml::_('jquery.framework');
+    }
+
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/jquery-ui.min.js');
     $doc->addScriptVersion(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.js');
@@ -542,9 +555,12 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               'toolbar1' => $tinymce_options['toolbar1'],
               'toolbar2' => $tinymce_options['toolbar2'],
               'removed_menuitems' => 'newdocument',
-              'relative_urls' => $tinymce_options['relative_urls'],
-              'remove_script_host' => false,
-              'document_base_url' => JUri::root(),
+              // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
+              // the next for lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
+              // if somebody stumbles upon this and needs a fix give me a call
+              'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
+              'remove_script_host' => true, // original tinymce config:  false
+              'document_base_url' => '/', // original tinymce config: JUri::root()
               'content_css' => $tinymce_options['content_css'],
               'importcss_append' => true,
               'resize' => $tinymce_options['resize'],
@@ -632,11 +648,11 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       $config['rowCustomClasses'] = explode(',', trim($row_classes));
     }
 
-    $row_presets = $this->params->get('rowPresets', '[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2],[2,8,2],[4,8],[8,4]');
+    $row_presets = $this->params->get('rowPresets', '[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2,2],[2,8,2],[4,8],[8,4]');
     // remove whitespaces
-    $row_presets = ltrim($row_presets);
+    $row_presets = trim($row_presets);
     // remove first bracket
-    $brace = ltrim($row_presets, '[');
+    $row_presets = ltrim($row_presets, '[');
     // remove last bracket
     $row_presets = rtrim($row_presets, ']');
     // explode on brackets + comma

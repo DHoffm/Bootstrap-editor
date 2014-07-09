@@ -17,15 +17,15 @@
 
     /*------------------------------------------ API ----------------------------------------*/
     gm.appendHTMLSelectedCols = function(html) {
-      var canvas = gm.$el.find("#" + gm.options.canvasId);
-      var cols = canvas.find(gm.options.colSelector);
-      $.each(cols, function(index) {
-        if ($(this).hasClass(gm.options.gmEditClassSelected)) {
-          $('.gm-editholder', this).append(html);
-        }
-      });
-    }
-    /*------------------------------------------ INIT ---------------------------------------*/
+        var canvas = gm.$el.find("#" + gm.options.canvasId);
+        var cols = canvas.find(gm.options.colSelector);
+        $.each(cols, function(index) {
+          if ($(this).hasClass(gm.options.gmEditClassSelected)) {
+            $('.gm-editholder', this).append(html);
+          }
+        });
+      }
+      /*------------------------------------------ INIT ---------------------------------------*/
     gm.init = function() {
       gm.options = $.extend({}, $.gridmanager.defaultOptions, options);
       gm.log("INIT");
@@ -125,6 +125,8 @@
         gm.rteControl("stop");
         $(".gm-editholder").removeClass('gm-editholder-active');
         $(this).addClass('gm-editholder-active');
+        $('.gm-editing').removeClass('gm-editing-active');
+        $(this).parent().addClass('gm-editing-active');
         rteRegion.attr("contenteditable", true);
         gm.rteControl("attach", rteRegion);
         //}
@@ -307,14 +309,14 @@
           .removeAttr("spellcheck")
           .removeAttr("id")
           .removeClass("mce-content-body").end()
-        // Clean img markup
-        .find("img")
+          // Clean img markup
+          .find("img")
           .removeAttr("style")
           .addClass("img-responsive")
           .removeAttr("data-cke-saved-src")
           .removeAttr("data-mce-src").end()
-        // Remove Tools
-        .find("." + gm.options.gmToolClass).remove();
+          // Remove Tools
+          .find("." + gm.options.gmToolClass).remove();
         output = canvas.html();
         $('#gm-plain-output').remove();
 
@@ -404,7 +406,7 @@
           .append(
             $("<span/>")
             .addClass(gm.options.controlButtonSpanClass)
-        ).append(" " + val);
+          ).append(" " + val);
 
         if (row.hasClass(val)) {
           btn.addClass(gm.options.gmDangerClass);
@@ -478,8 +480,8 @@
         .html(gm.toolFactory(gm.options.colButtonsPrepend)).append(
           $("<div/>", {
             "class": "gm-editholder"
-          }).html("<p>Awaiting Content</p>").append(gm.toolFactory(gm.options.colButtonsAppend))
-      );
+          }).html(gm.options.defaultColText)
+        ).append(gm.toolFactory(gm.options.colButtonsAppend));
       gm.log("++ Created Column " + size);
       return col;
     };
@@ -639,14 +641,14 @@
         .removeAttr("spellcheck")
         .removeAttr("id")
         .removeClass("mce-content-body").end()
-      // Clean img markup
-      .find("img")
+        // Clean img markup
+        .find("img")
         .removeAttr("style")
         .addClass("img-responsive")
         .removeAttr("data-cke-saved-src")
         .removeAttr("data-mce-src").end()
-      // Remove Tools
-      .find("." + gm.options.gmToolClass).remove();
+        // Remove Tools
+        .find("." + gm.options.gmToolClass).remove();
       // Destroy any RTEs
       gm.rteControl("stop");
       gm.log("~~Cleanup Ran~~");
@@ -829,6 +831,7 @@
     // Column resizing +- value: this is also the colMin value, as columns won't be able to go smaller than this number (otherwise you hit zero and all hell breaks loose)
     colResizeStep: 1,
 
+    defaultColText: "<p>Awaiting Content</p>",
     /*
      Rich Text Editors---------------
   */

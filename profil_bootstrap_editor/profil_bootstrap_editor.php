@@ -114,10 +114,10 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       if ( $tinymce_options['content_css_custom'] ) {
         // If URL, just pass it to $content_css
         if (strpos($tinymce_options['content_css_custom'], 'http') !== false) {
-          $tinymce_options['content_css'] = '"' . $tinymce_options['content_css_custom'] . '"';
+          $tinymce_options['content_css'] = $tinymce_options['content_css_custom'];
         // If it is not a URL, assume it is a file name in the current template folder
         } else {
-          $tinymce_options['content_css'] = '"' . JUri::root() . 'templates/' . $tinymce_options['template'] . '/css/' . $tinymce_options['content_css_custom'] . '"';
+          $tinymce_options['content_css'] = JUri::root() . 'templates/' . $tinymce_options['template'] . '/css/' . $tinymce_options['content_css_custom'];
 
           // Issue warning notice if the file is not found (but pass name to $content_css anyway to avoid TinyMCE error
           if (!file_exists($tinymce_options['templates_path'] . '/' . $tinymce_options['template'] . '/css/' . $tinymce_options['content_css_custom'])) {
@@ -135,10 +135,10 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
             if (!file_exists($tinymce_options['templates_path'] . '/system/css/editor.css')) {
               JLog::add(JText::_('PLG_TINY_ERR_EDITORCSSFILENOTPRESENT'), JLog::WARNING, 'jerror');
             } else {
-              $tinymce_options['content_css'] = '"' . JUri::root() . 'templates/system/css/editor.css"';
+              $tinymce_options['content_css'] = JUri::root() . 'templates/system/css/editor.css';
             }
           } else {
-            $tinymce_options['content_css'] = '"' . JUri::root() . 'templates/' . $tinymce_options['template'] . '/css/editor.css"';
+            $tinymce_options['content_css'] = JUri::root() . 'templates/' . $tinymce_options['template'] . '/css/editor.css';
           }
         }
       }
@@ -522,10 +522,13 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               'force_br_newlines' => $tinymce_options['force_br_newlines'],
               'force_p_newlines' => $tinymce_options['force_p_newlines'],
               'forced_root_block' => $tinymce_options['forced_root_block'],
-              'relative_urls' => $tinymce_options['relative_urls'],
-              'remove_script_host' => false,
-              'content_css' => $tinymce_options['content_css'],
-              'document_base_url' => JUri::root()
+              // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
+              // the next 3 lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
+              // if somebody stumbles upon this and needs a fix give me a call
+              'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
+              'remove_script_host' => true, // original tinymce config:  false
+              'document_base_url' => '/', // original tinymce config: JUri::root()
+              'content_css' => $tinymce_options['content_css']
             ),
           );
           break;
@@ -556,7 +559,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               'toolbar2' => $tinymce_options['toolbar2'],
               'removed_menuitems' => 'newdocument',
               // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
-              // the next for lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
+              // the next 3 lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
               // if somebody stumbles upon this and needs a fix give me a call
               'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
               'remove_script_host' => true, // original tinymce config:  false
@@ -609,9 +612,12 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               'toolbar3' => $tinymce_options['toolbar3'],
               'toolbar4' => $tinymce_options['toolbar4'],
               'removed_menuitems' => 'newdocument',
-              'relative_urls' => $tinymce_options['relative_urls'],
-              'remove_script_host' => false,
-              'document_base_url' => JUri::root(),
+              // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
+              // the next 3 lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
+              // if somebody stumbles upon this and needs a fix give me a call
+              'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
+              'remove_script_host' => true, // original tinymce config:  false
+              'document_base_url' => '/', // original tinymce config: JUri::root()
               'rel_list' => $tinymce_options['rel_list'],
               'templates' => $tinymce_options['templates'],
               'content_css' => $tinymce_options['content_css'],
@@ -694,7 +700,6 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
    */
   public function onDisplay($name, $content, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array()) {
     self::loadTinyMceJSConfig();
-    // add editor wrapper
     $editor = '<div class="editor-gridmanager">';
     // attach article content
     $editor .= html_entity_decode($content);

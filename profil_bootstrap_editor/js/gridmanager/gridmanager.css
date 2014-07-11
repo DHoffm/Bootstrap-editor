@@ -7,98 +7,150 @@
  */
 
 #gm-controls {
-  margin: 5px 0;
+    margin: 0;
 }
 #gm-controls button, #gm-controls a {
-  font-size: 16px;
+    font-size: 14px;
 }
 #gm-canvas {
-  min-height: 100px;
+    min-height: 100px;
+    z-index: 1000;
+    position: relative;
 }
 #gm-canvas .gm-editing {
-  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
-  box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 4px 15px;
-  min-height: 30px;
-  margin-left: 0;
+    -webkit-box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
+    box-shadow: inset 0px 0px 2px 0px rgba(50, 50, 50, 0.75);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 4px 15px;
+    min-height: 30px;
+    margin-left: 0;
 }
 #gm-canvas .gm-editing-selected {
-  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
-  -moz-box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
-  box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
+    -webkit-box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
+    -moz-box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
+    box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);
 }
 #gm-canvas .gm-editing-active {
-  z-index: 9999;
-  position: relative;
+    z-index: 9999;
+    position: relative;
 }
 #gm-canvas div.row.gm-editing, #gm-canvas div.row-fluid.gm-editing {
-  padding: 5px;
-  min-height: 20px;
-  margin-bottom: 10px;
+    padding: 5px;
+    min-height: 20px;
+    margin-bottom: 10px;
 }
 #gm-canvas div.gm-tools {
-  padding: 3px 0;
-  min-height: 30px;
-  display: block;
-  clear: both;
+    padding: 5px 0;
+    min-height: 30px;
+    display: block;
+    clear: both;
 }
 #gm-canvas div.gm-tools a:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 #gm-canvas div.gm-tools label, #gm-canvas div.gm-tools input {
-  font-size: 14px;
+    font-size: 14px;
 }
 #gm-canvas textarea {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 #gm-canvas .row {
-  margin-left: 0px!important;
-  margin-right: 0px!important;
+    margin-left: 0px!important;
+    margin-right: 0px!important;
 }
 #gm-canvas .glyphicon-trash {
-  color: #d9534f;
+    color: #d9534f;
 }
 #gm-controls .glyphicon {
-  top: 3px;
+    top: 3px;
 }
 #gm-controls .row {
-  margin-left: -15px!important;
-  margin-right: -15px!important;
+    margin-left: -15px!important;
+    margin-right: -15px!important;
 }
 #gm-controls .btn {
-  line-height: 19px;
-  padding: 3px;
-  margin: 7px 0;
-  float: left;
+    line-height: 19px;
+    padding: 3px;
+    margin: 7px 0;
+    float: left;
 }
 .editor-gridmanager * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .gm-editing .gm-tools {
-  cursor: move;
+    cursor: move;
 }
 .gm-editholder {
-  cursor: text;
-  border-bottom: 1px solid #ddd;
-  border-top: 1px solid #ddd;
-  padding: 15px 0;
+    cursor: text;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
 }
 .gm-tools a:hover, .gm-tools a:focus {
-  text-decoration: none;
+    text-decoration: none;
 }
 .editor-gridmanager-textarea {
-  display: none!important;
+    display: none!important;
 }
-.editor-gridmanager .mce-tinymce {}
-
+.editor-gridmanager .mce-tinymce {
+    min-width: 100%;
+}
 /* frontend fix */
+
 .item-page .icons .pull-right:after {
-  clear: both!important;
+    clear: both!important;
+}
+.gridbase-columns {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 5px;
+    margin-left: 0!important;
+    margin-right: 0!important;
+    zoom: 1;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+    z-index: -9999;
+}
+.gridbase-col {
+    position: relative;
+    margin-bottom: 10px;
+    background: transparent;
+    height: 100%;
+    background-color: #f1f1f1;
+}
+.gridbase-col-content {
+    width: 100%;
+    background-color: #cccccc;
+    height: 100%;
+}
+.gm-basegrid .glyphicon-align-justify:before {
+    display: inline-block;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    /* also accepts left, right, top, bottom coordinates; not required, but a good idea for styling */
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    -o-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    /* Should be unset in IE9+ I think. */
+    filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+.bg-warning {
+    background-color: #428bca!important;
+    zoom: 1;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
 }

@@ -17,20 +17,21 @@
 
     /*------------------------------------------ API ----------------------------------------*/
     gm.appendHTMLSelectedCols = function(html) {
-        var canvas = gm.$el.find("#" + gm.options.canvasId);
-        var cols = canvas.find(gm.options.colSelector);
-        $.each(cols, function(index) {
-          if ($(this).hasClass(gm.options.gmEditClassSelected)) {
-            $('.gm-editholder', this).append(html);
-          }
-        });
-      }
-      /*------------------------------------------ INIT ---------------------------------------*/
+      var canvas = gm.$el.find("#" + gm.options.canvasId);
+      var cols = canvas.find(gm.options.colSelector);
+      $.each(cols, function(index) {
+        if ($(this).hasClass(gm.options.gmEditClassSelected)) {
+          $('.gm-editholder', this).append(html);
+        }
+      });
+    }
+    /*------------------------------------------ INIT ---------------------------------------*/
     gm.init = function() {
       gm.options = $.extend({}, $.gridmanager.defaultOptions, options);
       gm.log("INIT");
       gm.rteControl("init");
       gm.createCanvas();
+      // add background grid
       gm.createControls();
       gm.initControls();
       gm.initCanvas();
@@ -46,7 +47,7 @@
       gm.$el.html("");
       $('<div/>', {
         'id': gm.options.canvasId,
-        'html': html
+        'html': '<div class="row-holder">' + html + '</div>'
       }).appendTo(gm.$el);
     };
 
@@ -88,36 +89,65 @@
 
     /* Add click functionality to the buttons */
     gm.initControls = function() {
-      var canvas = gm.$el.find("#" + gm.options.canvasId);
+      var canvas = gm.$el.find("#" + gm.options.canvasId + ' .row-holder');
       gm.log("+ InitControls Running");
 
       // Turn editing on or off
       gm.$el.on("click", ".gm-preview", function() {
+        // Destroy any RTEs
+        gm.rteControl("stop");
         if (gm.status) {
+          if (gm.options.baseGridStatus) {
+            gm.removeBaseGrid();
+          }
           gm.deinitCanvas();
           $(this).parent().find(".gm-mode").prop('disabled', true);
+          $(this).parent().find(".gm-basegrid").prop('disabled', true);
         } else {
           gm.initCanvas();
+          if (gm.options.baseGridStatus) {
+            gm.createBaseGrid();
+          }
           $(this).parent().find(".gm-mode").prop('disabled', false);
+          $(this).parent().find(".gm-basegrid").prop('disabled', false);
         }
         $(this).toggleClass(gm.options.gmDangerClass);
 
         // Switch editing mode
       }).on("click", ".gm-mode", function() {
+        gm.rteControl("stop");
         if (gm.mode === "visual") {
+          if (gm.options.baseGridStatus) {
+            gm.removeBaseGrid();
+          }
           gm.deinitCanvas();
           canvas.html($('<textarea/>').attr("cols", 130).attr("rows", 25).val(canvas.html()));
           gm.mode = "html";
           $(this).parent().find(".gm-preview").prop('disabled', true);
+          $(this).parent().find(".gm-basegrid").prop('disabled', true);
         } else {
           var editedSource = canvas.find("textarea").val();
           canvas.html(editedSource);
           gm.initCanvas();
+          if (gm.options.baseGridStatus) {
+            gm.createBaseGrid();
+          }
           gm.mode = "visual";
           $(this).parent().find(".gm-preview").prop('disabled', false);
+          $(this).parent().find(".gm-basegrid").prop('disabled', false);
         }
         $(this).toggleClass(gm.options.gmDangerClass);
 
+        // Make region editable
+      }).on("click", ".gm-basegrid", function() {
+        if (gm.options.baseGridStatus) {
+          gm.options.baseGridStatus = false;
+          gm.removeBaseGrid();
+        } else {
+          gm.options.baseGridStatus = true;
+          gm.createBaseGrid();
+        }
+        $(this).toggleClass(gm.options.gmDangerClass);
         // Make region editable
       }).on("click", ".gm-editholder", function() {
         var rteRegion = $(this);
@@ -125,8 +155,8 @@
         gm.rteControl("stop");
         $(".gm-editholder").removeClass('gm-editholder-active');
         $(this).addClass('gm-editholder-active');
-        $('.gm-editing').removeClass('gm-editing-active');
-        $(this).parent().addClass('gm-editing-active');
+        $('.gm-editing').removeClass(gm.options.gmEditClassActive);
+        $(this).parent().addClass(gm.options.gmEditClassActive);
         rteRegion.attr("contenteditable", true);
         gm.rteControl("attach", rteRegion);
         //}
@@ -173,7 +203,6 @@
           t.colWidth = (parseInt(t.colWidth, 10) - parseInt(gm.options.colResizeStep, 10));
           col.switchClass(t.colClass, gm.options.colClass + t.colWidth, 200);
         }
-
         // Increase Column Size
       }).on("click", "a.gm-colIncrease", function() {
         var col = $(this).closest("." + gm.options.gmEditClass);
@@ -182,7 +211,6 @@
           t.colWidth = (parseInt(t.colWidth, 10) + parseInt(gm.options.colResizeStep, 10));
           col.switchClass(t.colClass, gm.options.colClass + t.colWidth, 200);
         }
-
         // Reset all teh things
       }).on("click", "a.gm-resetgrid", function() {
         canvas.html("");
@@ -254,7 +282,7 @@
       gm.activateCols(cols);
       // Make Rows sortable
       canvas.sortable({
-        items: gm.options.rowSelector,
+        items: ".row-holder " + gm.options.rowSelector,
         axis: 'y',
         placeholder: gm.options.rowSortingClass,
         handle: "." + gm.options.gmToolClass,
@@ -294,7 +322,7 @@
         $('<div id="gm-plain-output"></div>').insertAfter("#" + gm.options.canvasId);
         // copy html to output div
         $('#gm-plain-output').css('display', 'none');
-        $('#gm-plain-output').html($("#" + gm.options.canvasId).html());
+        $('#gm-plain-output').html($("#" + gm.options.canvasId + " .row-holder").html());
         var canvas = $('#gm-plain-output');
         var cols = canvas.find(gm.options.colSelector);
         var rows = canvas.find(gm.options.rowSelector);
@@ -309,14 +337,14 @@
           .removeAttr("spellcheck")
           .removeAttr("id")
           .removeClass("mce-content-body").end()
-          // Clean img markup
-          .find("img")
+        // Clean img markup
+        .find("img")
           .removeAttr("style")
           .addClass("img-responsive")
           .removeAttr("data-cke-saved-src")
           .removeAttr("data-mce-src").end()
-          // Remove Tools
-          .find("." + gm.options.gmToolClass).remove();
+        // Remove Tools
+        .find("." + gm.options.gmToolClass).remove();
         output = canvas.html();
         $('#gm-plain-output').remove();
 
@@ -338,6 +366,7 @@
         gm.cleanup();
         gm.status = false;
       }
+
     };
 
     /*
@@ -393,6 +422,38 @@
       return row;
     };
 
+    gm.createBaseGrid = function() {
+      var baseGrid = $("<div/>", {
+        "class": gm.options.baseGridClass + " " + gm.options.rowClass
+      });
+      for (i = 0; i < gm.options.colMax; i++) {
+        baseGrid.append('<div class="gridbase-col ' + gm.options.colClass + 1 + '"><div class="gridbase-col-content"> </div></div>');
+      }
+      var canvas = gm.$el.find("#" + gm.options.canvasId);
+      canvas.append(baseGrid);
+    };
+
+    gm.removeBaseGrid = function() {
+      gm.$el.find("." + gm.options.baseGridClass).remove();
+    };
+
+    gm.testBaseGrid = function() {
+      var gridBaseColumns = gm.$el.find(".gridbase-columns");
+      var gridBaseCol = gridBaseColumns.find(".gridbase-col:first");
+      var width = parseInt(gridBaseCol.width());
+      var parentWidth = parseInt(gridBaseColumns.width());
+
+      if (width != null && parentWidth != null && width > 0 && parentWidth > 0) {
+        var percent = Math.round(100*width/parentWidth);
+        if (percent >= 90) {
+          gridBaseColumns.css("visibility", 'hidden');
+        } else {
+          gridBaseColumns.css("visibility", 'visible');
+        }
+      }
+    };
+
+
     /*
         Create the row specific settings box
         */
@@ -406,7 +467,7 @@
           .append(
             $("<span/>")
             .addClass(gm.options.controlButtonSpanClass)
-          ).append(" " + val);
+        ).append(" " + val);
 
         if (row.hasClass(val)) {
           btn.addClass(gm.options.gmDangerClass);
@@ -462,6 +523,7 @@
         */
     gm.deactivateCols = function(cols) {
       cols.removeClass(gm.options.gmEditClass)
+        .removeClass(gm.options.gmEditClassActive)
         .removeClass(gm.options.gmEditClassSelected);
       $.each(cols, function(i, val) {
         var temp = $(val).find(".gm-editholder").html();
@@ -481,7 +543,7 @@
           $("<div/>", {
             "class": "gm-editholder"
           }).html(gm.options.defaultColText)
-        ).append(gm.toolFactory(gm.options.colButtonsAppend));
+      ).append(gm.toolFactory(gm.options.colButtonsAppend));
       gm.log("++ Created Column " + size);
       return col;
     };
@@ -529,7 +591,7 @@
         */
     gm.generateClickHandler = function(colWidths) {
       var string = "a.add" + gm.generateButtonClass(colWidths);
-      var canvas = gm.$el.find("#" + gm.options.canvasId);
+      var canvas = gm.$el.find("#" + gm.options.canvasId + ' .row-holder');
       gm.$el.on("click", string, function(e) {
         gm.log("Clicked " + string);
         canvas.prepend(gm.createRow(colWidths));
@@ -641,14 +703,14 @@
         .removeAttr("spellcheck")
         .removeAttr("id")
         .removeClass("mce-content-body").end()
-        // Clean img markup
-        .find("img")
+      // Clean img markup
+      .find("img")
         .removeAttr("style")
         .addClass("img-responsive")
         .removeAttr("data-cke-saved-src")
         .removeAttr("data-mce-src").end()
-        // Remove Tools
-        .find("." + gm.options.gmToolClass).remove();
+      // Remove Tools
+      .find("." + gm.options.gmToolClass).remove();
       // Destroy any RTEs
       gm.rteControl("stop");
       gm.log("~~Cleanup Ran~~");
@@ -729,13 +791,14 @@
     controlButtonSpanClass: "glyphicon glyphicon-plus-sign",
 
     // Control bar RH dropdown markup
-    controlAppend: "<div class='btn-group pull-right'><button title='Edit Source Code' type='button' class='btn btn-xs btn-primary gm-mode'><span class='glyphicon glyphicon-chevron-left'></span><span class='glyphicon glyphicon-chevron-right'></span></button><button title='Preview' type='button' class='btn btn-xs btn-primary gm-preview'><span class='glyphicon glyphicon-eye-open'></span></button></div>",
+    controlAppend: "<div class='btn-group pull-right'><button title='Edit Source Code' type='button' class='btn btn-xs btn-primary gm-mode'><span class='glyphicon glyphicon-chevron-left'></span><span class='glyphicon glyphicon-chevron-right'></span></button><button title='Preview' type='button' class='btn btn-xs btn-primary gm-preview'><span class='glyphicon glyphicon-eye-open'></span></button><button title='Grid' type='button' class='btn btn-xs btn-primary gm-basegrid'><span class='glyphicon glyphicon-align-justify'></span></button></div>",
     /*
      General editing classes---------------
   */
     // Standard edit class, applied to active elements
     gmEditClass: "gm-editing",
     gmEditClassSelected: "gm-editing-selected",
+    gmEditClassActive: "gm-editing-active",
 
     // Tool bar class which are inserted dynamically
     gmToolClass: "gm-tools",
@@ -831,6 +894,8 @@
     // Column resizing +- value: this is also the colMin value, as columns won't be able to go smaller than this number (otherwise you hit zero and all hell breaks loose)
     colResizeStep: 1,
 
+    baseGridClass : "gridbase-columns",
+    baseGridStatus : false,
     defaultColText: "<p>Awaiting Content</p>",
     /*
      Rich Text Editors---------------

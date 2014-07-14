@@ -192,6 +192,31 @@
         }
         e.preventDefault();
         // Add new column to existing row
+      }).on("click", "a.gm-colSettings", function(){
+        var col=$(this).closest(gm.options.colSelector);
+        var drawer=col.find(".gm-colSettingsDrawer");
+          if(drawer.length > 0){
+            drawer.remove();
+          } else {
+            col.prepend(gm.generateColSettings(col));
+          }
+
+        // Change Col ID via colsettings
+        }).on("input", "input.gm-colSettingsID", function(){
+        var col=$(this).closest(gm.options.colSelector);
+          col.attr("id", $(this).val());
+
+        // Remove a class from a col via rowsettings
+      }).on("click", ".gm-togglecolClass", function(e){
+        var col=$(this).closest(gm.options.colSelector);
+        var theClass=$(this).text().trim();
+            col.toggleClass(theClass);
+            if(col.hasClass(theClass)){
+                $(this).addClass(gm.options.gmDangerClass);
+            } else {
+                $(this).removeClass(gm.options.gmDangerClass);
+            }
+            e.preventDefault();
       }).on("click", "a.gm-addColumn", function() {
         $(this).parent().after(gm.createCol(2));
 
@@ -335,7 +360,6 @@
         canvas.find(gm.options.colSelector)
           .removeAttr("style")
           .removeAttr("spellcheck")
-          .removeAttr("id")
           .removeClass("mce-content-body").end()
         // Clean img markup
         .find("img")
@@ -446,9 +470,9 @@
       if (width != null && parentWidth != null && width > 0 && parentWidth > 0) {
         var percent = Math.round(100*width/parentWidth);
         if (percent >= 90) {
-          gridBaseColumns.css("visibility", 'hidden');
+          gridBaseColumns.css("display", 'none');
         } else {
-          gridBaseColumns.css("visibility", 'visible');
+          gridBaseColumns.css("display", 'block');
         }
       }
     };
@@ -496,6 +520,48 @@
       return html[0].outerHTML;
     };
 
+
+    /**
+     * Create the col specific settings box
+     * @method generateColSettings
+     * @param {object} col - Column to act on
+     * @return MemberExpression
+     */
+    gm.generateColSettings = function(col){
+     // Col class toggle buttons
+      var classBtns=[];
+          $.each(gm.options.colCustomClasses, function(i, val){
+              var btn=$("<button/>")
+              .addClass("gm-togglecolClass")
+              .addClass(gm.options.controlButtonClass)
+              .append(
+                $("<span/>")
+                .addClass(gm.options.controlButtonSpanClass)
+              ).append(" " + val);
+              if(col.hasClass(val)){
+                btn.addClass(gm.options.gmDangerClass);
+              }
+              classBtns.push(btn[0].outerHTML);
+         });
+      // col settings drawer
+      var html=$("<div/>")
+          .addClass("gm-colSettingsDrawer")
+          .addClass(gm.options.gmToolClass)
+          .addClass(gm.options.gmClearClass)
+          .prepend($("<div />")
+            .addClass(gm.options.gmBtnGroup)
+            .addClass(gm.options.gmFloatLeft)
+            .html(classBtns.join("")))
+          .append($("<div />").addClass("pull-right").html(
+            $("<label />").html("col ID ").append(
+            $("<input>")
+              .addClass("gm-colSettingsID")
+              .attr({type: 'text', placeholder: 'col ID', value: col.attr("id")})
+            )
+          ));
+
+      return html[0].outerHTML;
+    };
     /*------------------------------------------ COLS ---------------------------------------*/
     /*
         Look for pre-existing columns and add editing tools as appropriate
@@ -701,7 +767,6 @@
       canvas.find(gm.options.colSelector)
         .removeAttr("style")
         .removeAttr("spellcheck")
-        .removeAttr("id")
         .removeClass("mce-content-body").end()
       // Clean img markup
       .find("img")
@@ -877,6 +942,11 @@
       element: "a",
       btnClass: "gm-colIncrease pull-left",
       iconClass: "glyphicon glyphicon-plus-sign"
+    }, {
+      title:"Column Settings",
+      element: "a",
+      btnClass: "pull-right gm-colSettings",
+      iconClass: "glyphicon glyphicon-cog"
     }],
 
     // Buttons to append to each column
@@ -887,6 +957,8 @@
       iconClass: "glyphicon glyphicon-trash"
     }],
 
+    // CUstom col classes - add your own to make them available in the col settings
+    colCustomClasses: ["example-col-class","test-class"],
 
     // Maximum column span value: if you've got a 24 column grid via customised bootstrap, you could set this to 24.
     colMax: 12,

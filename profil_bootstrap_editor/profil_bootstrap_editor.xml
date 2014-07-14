@@ -32,6 +32,7 @@
         </field>
         <field name="rowClasses" type="text" required="false" default="example-class, test-class" label="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_CLASSES_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_CLASSES_DESCRIPTION" />
         <field name="rowPresets" type="text" required="false" default="[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2,2],[2,8,2],[4,8],[8,4]" label="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_PRESETS_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_PRESETS_DESCRIPTION" />
+        <field name="colClasses" type="text" required="false" default="example-class, test-class" label="PLG_PROFIL_BOOTSTRAP_EDITOR_COL_CLASSES_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_COL_CLASSES_DESCRIPTION" />
       </fieldset>
     </fields>
   </config>

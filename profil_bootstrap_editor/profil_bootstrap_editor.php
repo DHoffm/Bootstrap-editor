@@ -31,12 +31,22 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     }
 
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/jquery-ui.min.js');
-    $doc->addScriptVersion(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
+
+    $plugin = JPluginHelper::getPlugin('editors', 'tinymce');
+    // check if tinymce is enabled
+    if (is_object($plugin)) {
+      $doc->addScriptVersion(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
+    }
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.js');
     $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-init.js');
-    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
-    $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.css');
+    $bootstrap_mode = (int) $this->params->get('mode', 0);
+
+    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
+    // bootstrap 3
+    if ($bootstrap_mode != 0) {
+      $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
+    }
   }
 
   /**
@@ -651,7 +661,15 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $row_classes = $this->params->get('rowClasses', 'example-class, test-class');
 
     if (!empty($row_classes)) {
-      $config['rowCustomClasses'] = explode(',', trim($row_classes));
+      $config['rowCustomClasses'] = array_map('trim', explode(',', $row_classes));
+    }
+
+    // check for custom col classes
+    $col_classes = $this->params->get('colClasses', 'example-class, test-class');
+
+    if (!empty($col_classes)) {
+      $config['colCustomClasses'] = array_map('trim', explode(',', $col_classes));
+
     }
 
     $row_presets = $this->params->get('rowPresets', '[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2,2],[2,8,2],[4,8],[8,4]');

@@ -1,9 +1,6 @@
 (function($) {
 
   $(document).ready(function() {
-
-    var tinyMceCloseTimer = false;
-
     // add a close button to the tinymce on init event
     profil_bootstrap_editor_gridmanager_options.tinymce.config.setup = function(ed) {
       ed.on('init', function (ed) {
@@ -14,9 +11,7 @@
     }
 
     var gm = $(".editor-gridmanager").gridmanager(
-
       profil_bootstrap_editor_gridmanager_options
-
     ).data('gridmanager');
 
     function profilBootstrapEditorSave(e) {
@@ -30,42 +25,20 @@
         gm.createBaseGrid();
       }
     }
-/*
-    // reset the timer to not close tinymce
-    $('.editor-gridmanager').on('mouseenter', function() {
-      if (tinyMceCloseTimer) {
-        clearTimeout(tinyMceCloseTimer);
-      }
-    });
 
-    // close tinymce when user is 3 sec inactive outside the editor
-    $('.editor-gridmanager').on('mouseleave', function() {
-      tinyMceCloseTimer = setTimeout(function() {
-        gm.rteControl("stop");
-      }, 3000);
-    });
-*/
-    var elem = $('.editor-gridmanager')[0];
-/*
-    // close tinymce on a click outside the editor
-    $(document).on('click', function(e) {
-      if ($(e.target).closest(elem).length === 0) {
-        if (tinyMceCloseTimer) {
-          clearTimeout(tinyMceCloseTimer);
-        }
-        gm.rteControl("stop");
-      }
-    });
-*/
     // close tinymce on escape key
     $(document).on('keydown', function(e) {
       if (e.keyCode === 27) {
         gm.rteControl("stop");
-        if (tinyMceCloseTimer) {
-          clearTimeout(tinyMceCloseTimer);
-        }
       }
     });
+
+    // tinymce close button event
+    $('.editor-gridmanager').on("click", '.gm-toggleTinyMce button', function(e) {
+      gm.rteControl("stop");
+      e.preventDefault();
+    });
+
     // check the joomla buttons if they contain the appropriate save function and add a class for saving process
     $('button:not(.button-processed)').addClass('button-processed').each(function() {
       if (
@@ -80,12 +53,6 @@
 
     $('.gridmanager-save-button').on("mouseenter", function(e) {
       profilBootstrapEditorSave(e);
-    });
-
-    // tinymce close button event
-    $('.editor-gridmanager').on("click", '.gm-toggleTinyMce button', function(e) {
-      gm.rteControl("stop");
-      e.preventDefault();
     });
 
     $(window).resize(function(){

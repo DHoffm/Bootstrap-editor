@@ -669,7 +669,6 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
 
     if (!empty($col_classes)) {
       $config['colCustomClasses'] = array_map('trim', explode(',', $col_classes));
-
     }
 
     $row_presets = $this->params->get('rowPresets', '[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2,2],[2,8,2],[4,8],[8,4]');
@@ -692,6 +691,10 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     if (!empty($controlButtons)) {
       $config['controlButtons'] = array_values($finalArray);
     }
+
+    $config['translations']['tinyMceClose'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_TINYMCE_CLOSE_BUTTON_LABEL');
+    $config['translations']['defaultColText'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_DEFAULT_COL_TEXT');
+    $config['defaultColText'] = $config['translations']['defaultColText'];
 
     $doc = JFactory::getDocument();
     // add tinymce js config

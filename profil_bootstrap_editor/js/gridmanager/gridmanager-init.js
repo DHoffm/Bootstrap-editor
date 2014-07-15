@@ -4,6 +4,15 @@
 
     var tinyMceCloseTimer = false;
 
+    // add a close button to the tinymce on init event
+    profil_bootstrap_editor_gridmanager_options.tinymce.config.setup = function(ed) {
+      ed.on('init', function (ed) {
+        console.log("init");
+        var closeButton = $("<div/>").addClass("gm-toggleTinyMce mce-widget pull-right mce-btn mce-menubtn mce-flow-layout-item").append($("<button/>").append($("<span/>").addClass('icon-cancel').append(" " + profil_bootstrap_editor_gridmanager_options.translations.tinyMceClose)));
+        $('.mce-menubar .mce-container-body').append(closeButton);
+      });
+    }
+
     var gm = $(".editor-gridmanager").gridmanager(
 
       profil_bootstrap_editor_gridmanager_options
@@ -71,6 +80,12 @@
 
     $('.gridmanager-save-button').on("mouseenter", function(e) {
       profilBootstrapEditorSave(e);
+    });
+
+    // tinymce close button event
+    $('.editor-gridmanager').on("click", '.gm-toggleTinyMce button', function(e) {
+      gm.rteControl("stop");
+      e.preventDefault();
     });
 
     $(window).resize(function(){

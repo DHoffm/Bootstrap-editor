@@ -507,7 +507,7 @@
           .addClass(gm.options.gmBtnGroup)
           .addClass(gm.options.gmFloatLeft)
           .html(classBtns.join("")))
-        .append($("<div />").addClass("pull-right").html(
+        .append($("<div />").addClass("pull-left").html(
           $("<label />").html("Row ID ").append(
             $("<input>").addClass("gm-rowSettingsID").attr({
               type: 'text',
@@ -552,11 +552,11 @@
             .addClass(gm.options.gmBtnGroup)
             .addClass(gm.options.gmFloatLeft)
             .html(classBtns.join("")))
-          .append($("<div />").addClass("pull-right").html(
+          .append($("<div />").addClass("pull-left").html(
             $("<label />").html("col ID ").append(
             $("<input>")
               .addClass("gm-colSettingsID")
-              .attr({type: 'text', placeholder: 'col ID', value: col.attr("id")})
+              .attr({type: 'text', placeholder: 'Col ID', value: col.attr("id")})
             )
           ));
 
@@ -875,7 +875,7 @@
     gmFloatLeft: "pull-left",
     gmFloatRight: "pull-right",
     gmBtnGroup: "btn-group",
-    gmDangerClass: "btn-danger",
+    gmDangerClass: "btn-success",
 
 
     /*

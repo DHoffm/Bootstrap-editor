@@ -89,8 +89,21 @@
     margin-bottom: 0!important;
 }
 
+#gm-canvas .gm-rowSettingsDrawer .btn-group{
+    white-space: normal;
+}
+
 #gm-canvas .gm-colSettingsDrawer {
     border-bottom:0!important;
+}
+
+#gm-canvas .gm-rowSettingsDrawer label, #gm-canvas .gm-colSettingsDrawer label {
+    display: block;
+}
+
+#gm-canvas .gm-rowSettingsDrawer .pull-left, #gm-canvas .gm-colSettingsDrawer .pull-left {
+    display: block;
+    max-width: 100%;
 }
 
 
@@ -219,4 +232,24 @@
     zoom: 1;
     filter: alpha(opacity=20);
     opacity: 0.2;
+}
+
+.gm-toggleRowClass, .gm-togglecolClass {
+    margin-bottom: 15px!important;
+    font-size: 12px!important;
+    background: #da4f49!important;
+    border: none!important;
+}
+
+.btn-success {
+    background-color: #5cb85c!important;
+}
+
+
+.gm-toggleRowClass .glyphicon, .gm-togglecolClass .glyphicon {
+    top: 2px;
+}
+
+.gm-colSettingsID, .gm-rowSettingsID {
+    max-width: 100%!important;
 }

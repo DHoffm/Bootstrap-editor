@@ -692,8 +692,8 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       $config['controlButtons'] = array_values($finalArray);
     }
 
-    $config['translations']['tinyMceClose'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_TINYMCE_CLOSE_BUTTON_LABEL');
-    $config['translations']['defaultColText'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_DEFAULT_COL_TEXT');
+    $config['translations']['tinyMceClose'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_TINYMCE_CLOSE_BUTTON_LABEL', true);
+    $config['translations']['defaultColText'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_DEFAULT_COL_TEXT', true);
     $config['defaultColText'] = $config['translations']['defaultColText'];
 
     $doc = JFactory::getDocument();

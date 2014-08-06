@@ -350,7 +350,7 @@
         items: gm.options.colSelector,
         axis: 'x',
         handle: "." + gm.options.gmToolClass + ":first-child",
-        forcePlaceholderSize: false,
+        forcePlaceholderSize: true,
         opacity: 0.7,
         revert: true,
         tolerance: "pointer",

@@ -120,9 +120,10 @@
   height: 100%;
 }
 #gm-canvas .row {
-  margin-left: 0px!important;
-  margin-right: 0px!important;
+  margin-left: 0px;
+  margin-right: 0px;
 }
+
 #gm-canvas .glyphicon-trash {
   color: #d9534f;
 }
@@ -239,6 +240,6 @@
 
 .gm-toggleTinyMce {
   top: 0;
-  position: absolute;
+  position: absolute!important;
   right: 0;
 }

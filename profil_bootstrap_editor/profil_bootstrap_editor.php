@@ -31,29 +31,29 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     if (version_compare( $version->RELEASE, '2.5', '<=')) {
       if(JFactory::getApplication()->get('jquery') !== true) {
         // load jQuery here
-        $doc->addScriptVersion('https://code.jquery.com/jquery-1.11.0.min.js');
+        $doc->addScript('https://code.jquery.com/jquery-1.11.0.min.js');
         JFactory::getApplication()->set('jquery', true);
       }
     } else {
         JHtml::_('jquery.framework');
     }
 
-    $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/jquery-ui.min.js');
+    $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/jquery-ui.min.js');
 
     $plugin = JPluginHelper::getPlugin('editors', 'tinymce');
     // check if tinymce is enabled
     if (is_object($plugin)) {
-      $doc->addScriptVersion(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
+      $doc->addScript(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
     }
-    $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.js');
-    $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-init.js');
+    $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.js');
+    $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-init.js');
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.css');
     $bootstrap_mode = (int) $this->params->get('mode', 0);
 
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
     // bootstrap 3
     if ($bootstrap_mode != 0) {
-      $doc->addScriptVersion(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
+      $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
     }
   }
 

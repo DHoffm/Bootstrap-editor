@@ -26,7 +26,7 @@ class plgContentprofil_bootstrap_editor_content extends JPlugin
         if (version_compare( $version->RELEASE, '2.5', '<=')) {
           if(JFactory::getApplication()->get('jquery') !== true) {
             // load jQuery here
-            $doc->addScriptVersion('https://code.jquery.com/jquery-1.11.0.min.js');
+            $doc->addScript('https://code.jquery.com/jquery-1.11.0.min.js');
             JFactory::getApplication()->set('jquery', true);
           }
         } else {

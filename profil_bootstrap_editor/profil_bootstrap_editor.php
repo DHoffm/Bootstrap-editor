@@ -33,9 +33,11 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
         // load jQuery here
         $doc->addScript('https://code.jquery.com/jquery-1.11.0.min.js');
         JFactory::getApplication()->set('jquery', true);
+        $tinymce_path = '/media/editors/tinymce/jscripts/tiny_mce/tiny_mce.js';
       }
     } else {
         JHtml::_('jquery.framework');
+        $tinymce_path = '/media/editors/tinymce/tinymce.min.js';
     }
 
     $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/jquery-ui.min.js');
@@ -43,8 +45,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $plugin = JPluginHelper::getPlugin('editors', 'tinymce');
     // check if tinymce is enabled
     if (is_object($plugin)) {
-      $doc->addScript(JURI::root() . '/media/editors/tinymce/tinymce.min.js');
+      $doc->addScript(JURI::root() . $tinymce_path);
     }
+
     $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.js');
     $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-init.js');
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.css');
@@ -700,7 +703,6 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       $config['controlButtons'] = array_values($finalArray);
     }
 
-    $config['translations']['tinyMceClose'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_TINYMCE_CLOSE_BUTTON_LABEL', true);
     $config['translations']['defaultColText'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_DEFAULT_COL_TEXT', true);
     $config['defaultColText'] = $config['translations']['defaultColText'];
 

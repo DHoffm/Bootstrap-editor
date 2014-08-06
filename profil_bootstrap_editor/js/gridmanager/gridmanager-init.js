@@ -5,7 +5,7 @@
     profil_bootstrap_editor_gridmanager_options.tinymce.config.setup = function(ed) {
       ed.on('init', function (ed) {
         console.log("init");
-        var closeButton = $("<div/>").addClass("gm-toggleTinyMce mce-widget pull-right mce-btn mce-menubtn mce-flow-layout-item").append($("<button/>").append($("<span/>").addClass('icon-cancel').append(" " + profil_bootstrap_editor_gridmanager_options.translations.tinyMceClose)));
+        var closeButton = $("<div/>").addClass("gm-toggleTinyMce mce-widget pull-right mce-btn mce-menubtn mce-flow-layout-item").append($("<button/>").append($("<span/>").addClass('icon-cancel').append(" ")));
         $('.mce-menubar .mce-container-body').append(closeButton);
       });
     }

@@ -10,7 +10,8 @@ The editor supports:
 - TinyMCE integration (if TinyMCE is not enabled a default textarea fallback is used)
 - Support for id's and classes for each row and columns
 - Rows and columns are sortable
+- Joomla 3, (Joomla 2.5 needs some extra efforts on TinyMCE integration)
 
-You can test the editor here: http://neokoenig.github.io/jQuery-gridmanager/
+You can test the latest editor here: http://neokoenig.github.io/jQuery-gridmanager/
 
-A joomla demo page is available here: http://editor.profilpr.de
+A joomla 3 demo page is available here: http://editor.profilpr.de

@@ -237,6 +237,23 @@
           col.switchClass(t.colClass, gm.options.colClass + t.colWidth, 200);
         }
         // Reset all teh things
+      }).on("click", "a.gm-colDecreaseOffset", function() {
+        var col = $(this).closest("." + gm.options.gmEditClass);
+        var t = gm.getColOffsetClass(col);
+        if (t.colOffsetWidth > 0) {
+          t.colOffsetWidth = (parseInt(t.colOffsetWidth, 10) - parseInt(gm.options.colResizeStep, 10));
+          col.switchClass(t.colOffsetClass, gm.options.colOffsetClass + t.colOffsetWidth, 200);
+        }
+        // Increase Column Size
+      }).on("click", "a.gm-colIncreaseOffset", function() {
+        var col = $(this).closest("." + gm.options.gmEditClass);
+        var t = gm.getColOffsetClass(col);
+        if (t.colOffsetWidth == "") { t.colOffsetWidth = 0; }
+        if (t.colOffsetWidth < gm.options.colMax) {
+          t.colOffsetWidth = (parseInt(t.colOffsetWidth, 10) + parseInt(gm.options.colResizeStep, 10));
+          col.switchClass(t.colOffsetClass, gm.options.colOffsetClass + t.colOffsetWidth, 200);
+        }
+        // Reset all teh things
       }).on("click", "a.gm-resetgrid", function() {
         canvas.html("");
         gm.reset();
@@ -263,7 +280,7 @@
           $(this).toggleClass(gm.options.gmEditClassSelected);
         }
         // For all the above, prevent default.
-      }).on("click", "a.gm-resetgrid, a.gm-remove, a.gm-save, button.gm-preview, a.gm-viewsource, a.gm-addColumn, a.gm-colDecrease, a.gm-colIncrease", function(e) {
+      }).on("click", "a.gm-resetgrid, a.gm-remove, a.gm-save, button.gm-preview, a.gm-viewsource, a.gm-addColumn, a.gm-colDecrease, a.gm-colIncrease,  a.gm-colDecreaseOffset, a.gm-colIncreaseOffset", function(e) {
         gm.log("Clicked: " + $.grep((this).className.split(" "), function(v) {
           return v.indexOf('gm-') === 0;
         }).join());
@@ -281,12 +298,23 @@
         */
     gm.getColClass = function(col) {
       var colClass = $.grep(col.attr("class").split(" "), function(v) {
-        return v.indexOf(gm.options.colClass) === 0;
+        return v.indexOf(gm.options.colClass) === 0 && v.indexOf(gm.options.colOffsetClass) !== 0;
       }).join();
       var colWidth = colClass.replace(gm.options.colClass, "");
       return {
         colClass: colClass,
         colWidth: colWidth
+      };
+    };
+
+    gm.getColOffsetClass = function(col) {
+      var colOffsetClass = $.grep(col.attr("class").split(" "), function(v) {
+        return v.indexOf(gm.options.colOffsetClass) === 0;
+      }).join();
+      var colOffsetWidth = colOffsetClass.replace(gm.options.colOffsetClass, "");
+      return {
+        colOffsetClass: colOffsetClass,
+        colOffsetWidth: colOffsetWidth
       };
     };
 
@@ -310,7 +338,7 @@
         items: ".row-holder " + gm.options.rowSelector,
         axis: 'y',
         placeholder: gm.options.rowSortingClass,
-        handle: "." + gm.options.gmToolClass,
+        handle: "." + gm.options.gmToolClass + ":first-child",
         forcePlaceholderSize: true,
         opacity: 0.7,
         revert: true,
@@ -321,8 +349,8 @@
       rows.sortable({
         items: gm.options.colSelector,
         axis: 'x',
-        handle: "." + gm.options.gmToolClass,
-        forcePlaceholderSize: true,
+        handle: "." + gm.options.gmToolClass + ":first-child",
+        forcePlaceholderSize: false,
         opacity: 0.7,
         revert: true,
         tolerance: "pointer",
@@ -924,6 +952,7 @@
   */
     // Generic row prefix: this should be the general span class, i.e span6 in BS2, col-md-6 (or you could change the whole thing to col-lg- etc)
     colClass: "col-md-",
+    colOffsetClass: "col-md-offset-",
 
     // Wild card column selector - this means we can find all columns irrespective of col-md or col-lg etc.
     colSelector: "div[class*=col-]",
@@ -942,6 +971,16 @@
       element: "a",
       btnClass: "gm-colIncrease pull-left",
       iconClass: "glyphicon glyphicon-plus-sign"
+    },{
+      title: "Decrease Column Offset",
+      element: "a",
+      btnClass: "gm-colDecreaseOffset pull-left",
+      iconClass: "glyphicon glyphicon-circle-arrow-left"
+    }, {
+      title: "Increase Column Offset",
+      element: "a",
+      btnClass: "gm-colIncreaseOffset pull-left",
+      iconClass: "glyphicon glyphicon-circle-arrow-right"
     }, {
       title:"Column Settings",
       element: "a",

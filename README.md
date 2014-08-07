@@ -1,4 +1,4 @@
-#Bootstrap-editor
+Bootstrap-editor
 ================
 
 Gridmanager bootstrap editor integration into Joomla. The editor is based on the work and efforts of Tom King (https://github.com/neokoenig/) and pbreah (https://github.com/pbreah/).

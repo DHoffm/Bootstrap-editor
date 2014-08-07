@@ -1,7 +1,15 @@
 #Bootstrap-editor
 ================
 
-Gridmanager bootstrap editor plugin integration into Joomla.
+Gridmanager bootstrap editor integration into Joomla. The editor is based on the work and efforts of Tom King (https://github.com/neokoenig/) and pbreah (https://github.com/pbreah/).
+This editor a Joomla plugin compatible with Joomla 3.0 upwards.
+
+If you like to test it download the latest version from here:
+
+https://github.com/DHoffm/Bootstrap-editor/raw/master/pkg_profil_bootstrap_editor.zip
+
+Make sure to enable the content plugin after install. This includes the bootstrap css and js on the frontend.
+
 
 ##The editor supports
 

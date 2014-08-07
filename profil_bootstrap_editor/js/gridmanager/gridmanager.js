@@ -45,10 +45,7 @@
       gm.log("+ Create Canvas");
       var html = gm.$el.html();
       gm.$el.html("");
-      $('<div/>', {
-        'id': gm.options.canvasId,
-        'html': '<div class="row-holder">' + html + '</div>'
-      }).appendTo(gm.$el);
+      $('<div/>', {'id': gm.options.canvasId, 'html': '<div class="row-holder">' + html + '</div>'}).appendTo(gm.$el);
     };
 
     /* Build and prepend the control panel */
@@ -354,7 +351,20 @@
         opacity: 0.7,
         revert: true,
         tolerance: "pointer",
-        cursor: "move"
+        cursor: "move",
+        // fixes a bug on t3-framework and protostar: when dragging the last item the item jumps to the left
+        helper: function(event, element) {
+          var clone = $(element).clone();
+          var w = $(element).outerWidth();
+          var h = $(element).outerHeight();
+          var top = $(element).position().top;
+          clone.css({
+              'top': top,
+              'width': w+'px',
+              'height': h+'px'
+            });
+          return clone;
+        }
       });
       gm.status = true;
       gm.mode = "visual";

@@ -1,14 +1,66 @@
 (function($) {
 
   $(document).ready(function() {
-    // add a close button to the tinymce on init event
+
+    function handleTinymceBootstrapButton(button, ed, classes) {
+      ed.focus();
+      button.active( !button.active() );
+      var state = button.active();
+      if (state) {
+        ed.selection.setContent('<a href="#" class="btn ' + classes + '">' + ed.selection.getContent() + '</a>');
+      } else {
+        var content = ed.selection.getContent();
+        if ( $( ed.selection.getNode() ).hasClass( "btn" ) ) {
+          ed.dom.remove(ed.dom.getParent(ed.selection.getNode(), 'a'));
+          ed.selection.setContent(content);
+        }
+      }
+    }
+    // add a close button and bootstrap buttons to the tinymce on init event
     profil_bootstrap_editor_gridmanager_options.tinymce.config.setup = function(ed) {
       ed.on('init', function (ed) {
-        console.log("init");
         var closeButton = $("<div/>").addClass("gm-toggleTinyMce mce-widget pull-right mce-btn mce-menubtn mce-flow-layout-item").append($("<button/>").append($("<span/>").addClass('icon-cancel').append(" ")));
         $('.mce-menubar .mce-container-body').append(closeButton);
       });
+      ed.addButton('bootstrap', {
+        type: 'menubutton',
+        text: 'Bootstrap',
+        icon: false,
+        menu: [
+          {
+            text: 'Buttons',
+            menu: [
+              {
+                text: 'Default',
+                onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-default"); }
+              },
+              {
+                text: 'Primary',
+                onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-primary"); }
+              },
+              {
+                text: 'Success',
+                onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-success"); }
+              },
+              {
+                text: 'Info',
+                onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-info"); }
+              },
+              {
+                text: 'Warning',
+                onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-warning"); }
+              },
+              {
+                text: 'Danger',
+                onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-danger"); }
+              },
+            ]
+          },
+          {text: 'Menu item 2', onclick: function() {ed.insertContent('Menu item 2');}}
+        ]
+      });
     }
+    profil_bootstrap_editor_gridmanager_options.tinymce.config.toolbar2 += " | bootstrap";
 
     var gm = $(".editor-gridmanager").gridmanager(
       profil_bootstrap_editor_gridmanager_options

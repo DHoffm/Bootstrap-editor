@@ -17,8 +17,8 @@ class plgContentprofil_bootstrap_editor_content extends JPlugin
     if ($app->isAdmin()) return;
     if (JPluginHelper::isEnabled('editors', 'profil_bootstrap_editor')) {
       $plugin = JPluginHelper::getPlugin('editors', 'profil_bootstrap_editor');
-      $params = new JRegistry($plugin->params);
-      $bootstrap_mode = (int) $params->get('mode', 0);
+      $editor_params = new JRegistry($plugin->params);
+      $bootstrap_mode = (int) $editor_params->get('mode', 0);
       if ($bootstrap_mode !== 0) {
         $doc = JFactory::getDocument();
         JLoader::import( 'joomla.version' );

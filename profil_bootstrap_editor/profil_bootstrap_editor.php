@@ -546,9 +546,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
               // the next 3 lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
               // if somebody stumbles upon this and needs a fix give me a call
-              'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
+              'relative_urls' => $tinymce_options['relative_urls'], // original tinymce config: $tinymce_options['relative_urls'],
               'remove_script_host' => true, // original tinymce config:  false
-              'document_base_url' => '/', // original tinymce config: JUri::root()
+              'document_base_url' => JUri::root(), // original tinymce config: JUri::root()
               'content_css' => $tinymce_options['content_css']
             ),
           );
@@ -582,9 +582,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
               // the next 3 lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
               // if somebody stumbles upon this and needs a fix give me a call
-              'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
+              'relative_urls' => $tinymce_options['relative_urls'], // original tinymce config: $tinymce_options['relative_urls'],
               'remove_script_host' => true, // original tinymce config:  false
-              'document_base_url' => '/', // original tinymce config: JUri::root()
+              'document_base_url' => JUri::root(), // original tinymce config: JUri::root()
               'content_css' => $tinymce_options['content_css'],
               'importcss_append' => true,
               'resize' => $tinymce_options['resize'],
@@ -636,9 +636,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
               // tinymce seems to mess up embeded images in article posts when using window.tinymce.remove()
               // the next 3 lines seem to do the trick on supplying relative urls, who needs absolute urls anyway
               // if somebody stumbles upon this and needs a fix give me a call
-              'relative_urls' => false, // original tinymce config: $tinymce_options['relative_urls'],
+              'relative_urls' => $tinymce_options['relative_urls'], // original tinymce config: $tinymce_options['relative_urls'],
               'remove_script_host' => true, // original tinymce config:  false
-              'document_base_url' => '/', // original tinymce config: JUri::root()
+              'document_base_url' => JUri::root(), // original tinymce config: JUri::root()
               'rel_list' => $tinymce_options['rel_list'],
               'templates' => $tinymce_options['templates'],
               'content_css' => $tinymce_options['content_css'],
@@ -705,6 +705,8 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
 
     $config['translations']['defaultColText'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_DEFAULT_COL_TEXT', true);
     $config['defaultColText'] = $config['translations']['defaultColText'];
+
+    $config['root'] = JUri::root();
 
     $doc = JFactory::getDocument();
     // add tinymce js config

@@ -93,6 +93,7 @@
       gm.$el.on("click", ".gm-preview", function() {
         // Destroy any RTEs
         gm.rteControl("stop");
+        gm.gridmanagerRelativeToAbsoluteURLs();
         if (gm.status) {
           if (gm.options.baseGridStatus) {
             gm.removeBaseGrid();
@@ -119,6 +120,7 @@
           }
           gm.deinitCanvas();
           canvas.html($('<textarea/>').attr("cols", 130).attr("rows", 25).val(canvas.html()));
+          gm.gridmanagerAbsoluteToRelativeURLs();
           gm.mode = "html";
           $(this).parent().find(".gm-preview").prop('disabled', true);
           $(this).parent().find(".gm-basegrid").prop('disabled', true);
@@ -132,6 +134,7 @@
           gm.mode = "visual";
           $(this).parent().find(".gm-preview").prop('disabled', false);
           $(this).parent().find(".gm-basegrid").prop('disabled', false);
+          gm.gridmanagerRelativeToAbsoluteURLs();
         }
         $(this).toggleClass(gm.options.gmDangerClass);
 
@@ -791,6 +794,11 @@
           $(this).attr('src', profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src'));
         }
       });
+    }
+
+    gm.gridmanagerAbsoluteToRelativeURLs = function() {
+      var re = new RegExp(profil_bootstrap_editor_gridmanager_options.root,"g");
+      $('.editor-gridmanager textarea').val($('.editor-gridmanager textarea').val().replace(re, ''));
     }
 
     /*------------------------------------------ Useful functions ---------------------------------------*/

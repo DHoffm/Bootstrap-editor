@@ -55,8 +55,8 @@
                 onclick: function(){ handleTinymceBootstrapButton(this, ed, "btn-danger"); }
               },
             ]
-          },
-          {text: 'Menu item 2', onclick: function() {ed.insertContent('Menu item 2');}}
+          }
+          /*{text: 'Menu item 2', onclick: function() {ed.insertContent('Menu item 2');}}*/
         ]
       });
     }

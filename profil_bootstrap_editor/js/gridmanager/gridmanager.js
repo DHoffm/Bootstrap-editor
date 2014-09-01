@@ -545,7 +545,7 @@
           .addClass(gm.options.gmBtnGroup)
           .addClass(gm.options.gmFloatLeft)
           .html(classBtns.join("")))
-        .append($("<div />").addClass("pull-left").html(
+        .append($("<div />").addClass("pull-right").html(
           $("<label />").html("Row ID ").append(
             $("<input>").addClass("gm-rowSettingsID").attr({
               type: 'text',

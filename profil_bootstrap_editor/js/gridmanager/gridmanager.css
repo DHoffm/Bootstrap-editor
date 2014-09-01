@@ -161,7 +161,8 @@
   display: none!important;
 }
 .editor-gridmanager .mce-tinymce {
-  min-width: 100%;
+  /*min-width: 100%;*/
+  min-width: 750px;
 }
 /* frontend fix */
 

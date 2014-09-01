@@ -1,7 +1,7 @@
 (function($) {
 
   $(document).ready(function() {
-
+    //textareaRelativeToAbsoluteURLs();
     function handleTinymceBootstrapButton(button, ed, classes) {
       ed.focus();
       button.active( !button.active() );
@@ -65,14 +65,47 @@
     var gm = $(".editor-gridmanager").gridmanager(
       profil_bootstrap_editor_gridmanager_options
     ).data('gridmanager');
+    gridmanagerRelativeToAbsoluteURLs();
+
+    /*function textareaRelativeToAbsoluteURLs() {
+      $('#jform_articletext').each(function() {
+        var html = $('<div></div>');
+        html.append($(this).val());
+        img = html.find('img');
+        img.attr('src', function(idx, src) {
+          if ($(this).attr('src').indexOf(profil_bootstrap_editor_gridmanager_options.root) == -1) {
+            return profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src');
+          }
+        });
+
+        $(this).val(html.html());
+      });
+    }*/
+
+    function gridmanagerRelativeToAbsoluteURLs() {
+      $('.gm-editholder .img-responsive').each(function() {
+        if ($(this).attr('src').indexOf(profil_bootstrap_editor_gridmanager_options.root) == -1) {
+          $(this).attr('src', profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src'));
+        }
+      });
+    }
+
+    function textareaAbsoluteToRelativeURLs() {
+      var re = new RegExp(profil_bootstrap_editor_gridmanager_options.root,"g");
+      $('#jform_articletext').val($('#jform_articletext').val().replace(re, ''));
+    }
 
     function profilBootstrapEditorSave(e) {
       gm.rteControl("stop");
       if (gm.options.baseGridStatus) {
         gm.removeBaseGrid();
       }
+
       var output = gm.deinitCanvas(true);
       $('#jform_articletext').val(output);
+      // remove the absolute urls to use relative urls on the frontend
+      gridmanagerRelativeToAbsoluteURLs();
+      textareaAbsoluteToRelativeURLs();
       if (gm.options.baseGridStatus) {
         gm.createBaseGrid();
       }
@@ -82,12 +115,14 @@
     $(document).on('keydown', function(e) {
       if (e.keyCode === 27) {
         gm.rteControl("stop");
+        gridmanagerRelativeToAbsoluteURLs();
       }
     });
 
     // tinymce close button event
     $('.editor-gridmanager').on("click", '.gm-toggleTinyMce button', function(e) {
       gm.rteControl("stop");
+      gridmanagerRelativeToAbsoluteURLs();
       e.preventDefault();
     });
 

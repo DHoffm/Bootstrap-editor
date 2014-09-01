@@ -65,7 +65,7 @@
     var gm = $(".editor-gridmanager").gridmanager(
       profil_bootstrap_editor_gridmanager_options
     ).data('gridmanager');
-    gridmanagerRelativeToAbsoluteURLs();
+    gm.gridmanagerRelativeToAbsoluteURLs();
 
     /*function textareaRelativeToAbsoluteURLs() {
       $('#jform_articletext').each(function() {
@@ -82,14 +82,6 @@
       });
     }*/
 
-    function gridmanagerRelativeToAbsoluteURLs() {
-      $('.gm-editholder .img-responsive').each(function() {
-        if ($(this).attr('src').indexOf(profil_bootstrap_editor_gridmanager_options.root) == -1) {
-          $(this).attr('src', profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src'));
-        }
-      });
-    }
-
     function textareaAbsoluteToRelativeURLs() {
       var re = new RegExp(profil_bootstrap_editor_gridmanager_options.root,"g");
       $('#jform_articletext').val($('#jform_articletext').val().replace(re, ''));
@@ -104,7 +96,7 @@
       var output = gm.deinitCanvas(true);
       $('#jform_articletext').val(output);
       // remove the absolute urls to use relative urls on the frontend
-      gridmanagerRelativeToAbsoluteURLs();
+      gm.gridmanagerRelativeToAbsoluteURLs();
       textareaAbsoluteToRelativeURLs();
       if (gm.options.baseGridStatus) {
         gm.createBaseGrid();
@@ -115,14 +107,14 @@
     $(document).on('keydown', function(e) {
       if (e.keyCode === 27) {
         gm.rteControl("stop");
-        gridmanagerRelativeToAbsoluteURLs();
+        gm.gridmanagerRelativeToAbsoluteURLs();
       }
     });
 
     // tinymce close button event
     $('.editor-gridmanager').on("click", '.gm-toggleTinyMce button', function(e) {
       gm.rteControl("stop");
-      gridmanagerRelativeToAbsoluteURLs();
+      gm.gridmanagerRelativeToAbsoluteURLs();
       e.preventDefault();
     });
 

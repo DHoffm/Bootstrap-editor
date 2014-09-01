@@ -743,6 +743,7 @@
             case 'tinymce':
               //if(!(element).hasClass("mce-content-body")){
               //element.tinymce(gm.options.tinymce.config);
+              gm.gridmanagerRelativeToAbsoluteURLs();
               tinyMCE.init(
                 gm.options.tinymce.config
               );
@@ -761,6 +762,7 @@
           switch (gm.options.rte) {
             case 'tinymce':
               // destroy TinyMCE
+              gm.gridmanagerRelativeToAbsoluteURLs();
               window.tinymce.remove();
               gm.log("-- TinyMCE destroyed");
               break;
@@ -783,6 +785,13 @@
       }
     };
 
+    gm.gridmanagerRelativeToAbsoluteURLs = function() {
+      $('.gm-editholder .img-responsive').each(function() {
+        if ($(this).attr('src').indexOf(profil_bootstrap_editor_gridmanager_options.root) == -1) {
+          $(this).attr('src', profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src'));
+        }
+      });
+    }
 
     /*------------------------------------------ Useful functions ---------------------------------------*/
 

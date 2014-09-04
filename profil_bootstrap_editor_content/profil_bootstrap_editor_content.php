@@ -1,4 +1,11 @@
 <?php
+/**
+ * @version   1.0
+ * @package   Profil bootstrap editor(plugin)
+ * @author    David Hoffmann - http://www.profilpr.de
+ * @copyright Copyright (c) 2014 Profilpr. All rights reserved.
+ * @license   GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ */
 
 // no direct access
 defined('_JEXEC') or die;

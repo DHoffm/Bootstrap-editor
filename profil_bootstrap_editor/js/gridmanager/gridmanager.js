@@ -352,7 +352,7 @@
       gm.activateCols(cols);
 
       if (canvas.find(gm.options.readmoreSelector).length > 0) {
-        $('#gm-addnew .readmore').toggleClass(gm.options.gmDangerClass);
+        $('#gm-addnew .readmore').addClass(gm.options.gmDangerClass);
       }
 
       // Make Rows sortable

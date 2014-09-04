@@ -84,7 +84,9 @@
 
     function textareaAbsoluteToRelativeURLs() {
       var re = new RegExp(profil_bootstrap_editor_gridmanager_options.root,"g");
-      $('#jform_articletext').val($('#jform_articletext').val().replace(re, ''));
+      if($('.editor-gridmanager-textarea').val()) {
+        $('.editor-gridmanager-textarea').val($('.editor-gridmanager-textarea').val().replace(re, ''));
+      }
     }
 
     function profilBootstrapEditorSave(e) {
@@ -94,7 +96,7 @@
       }
 
       var output = gm.deinitCanvas(true);
-      $('#jform_articletext').val(output);
+      $('.editor-gridmanager-textarea').val(output);
       // remove the absolute urls to use relative urls on the frontend
       gm.gridmanagerRelativeToAbsoluteURLs();
       textareaAbsoluteToRelativeURLs();
@@ -123,6 +125,10 @@
       if (
         $(this).attr("onclick") == "Joomla.submitbutton('article.save')" ||
         $(this).attr("onclick") == "Joomla.submitbutton('article.apply')" ||
+        $(this).attr("onclick") == "Joomla.submitbutton('article.save2copy')" ||
+        $(this).attr("onclick") == "Joomla.submitbutton('article.save2new')" ||
+        $(this).attr("onclick") == "Joomla.submitbutton('module.save')" ||
+        $(this).attr("onclick") == "Joomla.submitbutton('module.apply')" ||
         $(this).attr("onclick") == "Joomla.submitbutton('article.save2copy')" ||
         $(this).attr("onclick") == "Joomla.submitbutton('article.save2new')"
       ) {

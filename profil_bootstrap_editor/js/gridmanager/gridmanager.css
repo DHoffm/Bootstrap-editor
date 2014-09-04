@@ -244,3 +244,15 @@
   position: absolute!important;
   right: 0;
 }
+
+.row-readmore > .gm-tools {
+  background-color: #d9534f!important;
+  color: #ffffff!important;
+}
+.row-readmore > .gm-tools ~ .gm-tools {
+  background-color: #d8d8d8!important;
+}
+
+#gm-addnew .readmore {
+  background: #da4f49;
+}

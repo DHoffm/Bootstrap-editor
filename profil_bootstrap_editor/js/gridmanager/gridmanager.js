@@ -59,6 +59,9 @@
         gm.generateClickHandler(val);
       });
 
+      buttons.push("<a title='Add Readmore' class='" + gm.options.controlButtonClass + " readmore readmore-12'><span class='" + gm.options.controlButtonSpanClass + "'></span>&nbsp;" + gm.options.readmoreTitle + "</a>");
+      gm.generateReadmoreClickHandler([12]);
+
       /* Generate the control bar markup */
       gm.$el.prepend(
         $('<div/>', {
@@ -275,6 +278,15 @@
           this.remove();
         });
 
+      }).on("click", "a.gm-removeReadmoreRow", function() {
+        $(this).closest("." + gm.options.gmEditClass).animate({
+          opacity: 'hide',
+          height: 'hide'
+        }, 400, function() {
+          this.remove();
+        });
+        $('#gm-addnew .readmore').toggleClass(gm.options.gmDangerClass);
+
       }).on('click', ('#' + gm.options.canvasId + ' ' + gm.options.colSelector), function() {
         if (gm.options.colSelectEnabled) {
           $(this).toggleClass(gm.options.gmEditClassSelected);
@@ -326,13 +338,23 @@
       var canvas = gm.$el.find("#" + gm.options.canvasId);
       var cols = canvas.find(gm.options.colSelector);
       var rows = canvas.find(gm.options.rowSelector);
+      var rows_readmore = canvas.find(gm.options.readmoreSelector);
       gm.log("+ InitCanvas Running");
       // Show the template controls
       gm.$el.find("#gm-addnew").show();
       // Sort Rows First
+      gm.activateReplaceReadmoreRows(rows_readmore);
+      var rows_readmore = canvas.find(gm.options.rowReadmoreSelector);
+      gm.activateReadmoreRows(rows_readmore);
+
       gm.activateRows(rows);
       // Now Columns
       gm.activateCols(cols);
+
+      if (canvas.find(gm.options.readmoreSelector).length > 0) {
+        $('#gm-addnew .readmore').toggleClass(gm.options.gmDangerClass);
+      }
+
       // Make Rows sortable
       canvas.sortable({
         items: ".row-holder " + gm.options.rowSelector,
@@ -392,8 +414,10 @@
         var canvas = $('#gm-plain-output');
         var cols = canvas.find(gm.options.colSelector);
         var rows = canvas.find(gm.options.rowSelector);
+        var rows_readmore = canvas.find(gm.options.rowReadmoreSelector);
         // Sort Rows First
         gm.deactivateRows(rows);
+        gm.deactivateReadmoreRows(rows_readmore);
         // Now Columns
         gm.deactivateCols(cols);
         // Clean markup
@@ -419,12 +443,13 @@
         var canvas = gm.$el.find("#" + gm.options.canvasId);
         var cols = canvas.find(gm.options.colSelector);
         var rows = canvas.find(gm.options.rowSelector);
-
+        var rows_readmore = canvas.find(gm.options.rowReadmoreSelector);
         gm.log("- deInitCanvas Running");
         // Hide template control
         gm.$el.find("#gm-addnew").hide();
         // Sort Rows First
         gm.deactivateRows(rows);
+        gm.deactivateReadmoreRows(rows_readmore);
         // Now Columns
         gm.deactivateCols(cols);
         // Clean markup
@@ -461,6 +486,20 @@
       );
     };
 
+    gm.activateReplaceReadmoreRows = function(rows) {
+      gm.log("-- Replace Readmore Rows");
+      rows.replaceWith("<div class='" + gm.options.rowClass + " "+ gm.options.rowReadmoreClass + "'>" + gm.options.readmoreCode + "</div>");
+    };
+
+    gm.activateReadmoreRows = function(rows) {
+      gm.log("++ Activate Readmore Rows");
+      rows.addClass(gm.options.gmEditClass).prepend(
+        gm.genericToolFactory(gm.options.rowReadmorePrepend)
+      ).append(
+        gm.toolFactory(gm.options.rowButtonsAppend)
+      );
+    };
+
     /*
         Look for pre-existing rows and remove editing classes as appropriate
           @rows: elements to act on
@@ -470,6 +509,10 @@
       rows.removeClass(gm.options.gmEditClass).removeClass("ui-sortable").removeAttr("style");
     };
 
+    gm.deactivateReadmoreRows = function(rows) {
+      gm.log("-- DeActivate Readmore Rows");
+      rows.replaceWith(gm.options.readmoreCode);
+    };
     /*
         Create a single row with appropriate editing tools & nested columns
           @colWidths : array of css class integers, i.e [2,4,5]
@@ -483,6 +526,19 @@
       });
       row.prepend(gm.toolFactory(gm.options.rowButtonsPrepend))
         .append(gm.toolFactory(gm.options.rowButtonsAppend));
+      gm.log("++ Created Row");
+      return row;
+    };
+
+    gm.createReadmoreRow = function(colWidths) {
+      var row = $("<div/>", {
+        "class": gm.options.rowClass + " " + gm.options.gmEditClass + " " + gm.options.rowReadmoreClass
+      });
+      $.each(colWidths, function(i, val) {
+        row.append(gm.options.readmoreCode);
+      });
+      row.prepend(gm.genericToolFactory(gm.options.rowReadmorePrepend))
+        .append(gm.toolFactory(gm.options.rowReadmoreButtonsAppend));
       gm.log("++ Created Row");
       return row;
     };
@@ -669,6 +725,22 @@
       return tools[0].outerHTML;
     };
 
+    gm.genericToolFactory = function(elements) {
+      var tools = $("<div/>")
+        .addClass(gm.options.gmToolClass)
+        .addClass(gm.options.gmClearClass)
+        .html(gm.genericElementFactory(elements));
+      return tools[0].outerHTML;
+    };
+
+    gm.genericElementFactory = function(elems) {
+      var elements = [];
+      $.each(elems, function(i, val) {
+        elements.push("<" + val.element + " class='" + val.btnClass + "'><span class='" + val.iconClass + "'></span>&nbsp;" + val.title + "</" + val.element + "> ");
+      });
+      return elements.join("");
+    };
+
     /*
          Returns html string of buttons
          @btns Array of button configurations (see options)
@@ -715,6 +787,42 @@
           tolerance: "pointer",
           cursor: "move"
         });
+        e.preventDefault();
+      });
+    };
+
+    gm.generateReadmoreClickHandler = function(colWidths) {
+      var string = "a.readmore" + gm.generateButtonClass(colWidths);
+      var canvas = gm.$el.find("#" + gm.options.canvasId + ' .row-holder');
+      // check if a readmore button is present initially
+      gm.$el.on("click", string, function(e) {
+        gm.log("Clicked " + string);
+        $(this).toggleClass(gm.options.gmDangerClass);
+        // remove readmore row
+        if (canvas.find(gm.options.readmoreSelector).length > 0) {
+          $(gm.options.readmoreSelector, canvas).closest("." + gm.options.gmEditClass).animate({
+            opacity: 'hide',
+            height: 'hide'
+          }, 400, function() {
+            this.remove();
+          });
+        // add readmore row
+        } else {
+          canvas.prepend(gm.createReadmoreRow(colWidths));
+          //gm.reset();
+          var rows = canvas.find(gm.options.rowSelector);
+          // Make columns sortable
+          rows.sortable({
+            items: gm.options.colSelector,
+            axis: 'x',
+            handle: "." + gm.options.gmToolClass,
+            forcePlaceholderSize: true,
+            opacity: 0.7,
+            revert: true,
+            tolerance: "pointer",
+            cursor: "move"
+          });
+        }
         e.preventDefault();
       });
     };
@@ -789,9 +897,12 @@
     };
 
     gm.gridmanagerRelativeToAbsoluteURLs = function() {
-      $('.gm-editholder .img-responsive').each(function() {
-        if ($(this).attr('src').indexOf(profil_bootstrap_editor_gridmanager_options.root) == -1) {
-          $(this).attr('src', profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src'));
+      $('.gm-editholder img').each(function() {
+        // only process relative urls
+        if ($(this).attr('src').indexOf('http://') === -1 && $(this).attr('src').indexOf('https://') === -1) {
+          if ($(this).attr('src').indexOf(profil_bootstrap_editor_gridmanager_options.root) == -1) {
+            $(this).attr('src', profil_bootstrap_editor_gridmanager_options.root + $(this).attr('src'));
+          }
         }
       });
     }
@@ -922,7 +1033,6 @@
 
     // Tool bar class which are inserted dynamically
     gmToolClass: "gm-tools",
-
     // Clearing class, used on most toolbars
     gmClearClass: "clearfix",
 
@@ -938,10 +1048,12 @@
   */
     // Generic row class. change to row--fluid for fluid width in Bootstrap
     rowClass: "row",
-
+    rowReadmoreClass: "row-readmore",
     // Used to find rows - change to div.row-fluid for fluid width
     rowSelector: "div.row",
-
+    rowReadmoreSelector: "div.row-readmore",
+    readmoreSelector: "#system-readmore",
+    readmoreTitle: "Readmore",
     // class of background element when sorting rows
     rowSortingClass: "bg-warning",
 
@@ -960,6 +1072,14 @@
 
     ],
 
+    rowReadmorePrepend: [{
+        title: "Readmore",
+        element: "span",
+        btnClass: "pull-left  ",
+        iconClass: ""
+      }
+    ],
+
     // Buttons at the bottom of each row
     rowButtonsAppend: [{
       title: "Remove row",
@@ -968,6 +1088,12 @@
       iconClass: "glyphicon glyphicon-trash"
     }],
 
+    rowReadmoreButtonsAppend: [{
+      title: "Remove row",
+      element: "a",
+      btnClass: "pull-right gm-removeReadmoreRow",
+      iconClass: "glyphicon glyphicon-trash"
+    }],
     // Not sure about this one yet
     rowSettingControls: "Reserved for future use",
 
@@ -1035,6 +1161,8 @@
     baseGridClass : "gridbase-columns",
     baseGridStatus : false,
     defaultColText: "<p>Awaiting Content</p>",
+    readmoreCode: "<hr id='system-readmore' />",
+
     /*
      Rich Text Editors---------------
   */

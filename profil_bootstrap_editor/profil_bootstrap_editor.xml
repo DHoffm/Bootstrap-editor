@@ -26,7 +26,7 @@
   <config>
     <fields name="params">
       <fieldset name="basic">
-        <field name="mode" type="radio" default="0" description="PLG_PROFIL_BOOTSTRAP_EDITOR_MODE_DESCRIPTION" label="PLG_PROFIL_BOOTSTRAP_EDITOR_MODE_LABEL">
+        <field name="mode" type="radio" default="1" description="PLG_PROFIL_BOOTSTRAP_EDITOR_MODE_DESCRIPTION" label="PLG_PROFIL_BOOTSTRAP_EDITOR_MODE_LABEL">
           <option value="0">PLG_PROFIL_BOOTSTRAP_EDITOR_TWO_LABEL</option>
           <option value="1">PLG_PROFIL_BOOTSTRAP_EDITOR_THREE_LABEL</option>
         </field>

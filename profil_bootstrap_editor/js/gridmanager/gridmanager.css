@@ -78,6 +78,7 @@
 }
 #gm-canvas .gm-rowSettingsDrawer .btn-group, #gm-canvas .gm-colSettingsDrawer .btn-group {
   white-space: normal;
+  margin-right: 10px;
 }
 #gm-canvas .gm-colSettingsDrawer {
   border-bottom: 0!important;
@@ -255,4 +256,11 @@
 
 #gm-addnew .readmore {
   background: #da4f49;
+}
+
+/* reset the form elements on admin pages, bootstrap box-sizing breaks the height and a min-height is not set */
+.admin input, .admin select, .admin .controls * {
+  box-sizing: initial;
+  -webkit-box-sizing: initial;
+  -moz-box-sizing: initial;
 }

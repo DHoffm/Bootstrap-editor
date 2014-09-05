@@ -16,6 +16,11 @@
         }
       }
     }
+
+    function handleTinymceWidgetkitButton(ed, id) {
+      ed.focus();
+      ed.selection.setContent('[widgetkit id=' + id + ']');
+    }
     // add a close button and bootstrap buttons to the tinymce on init event
     profil_bootstrap_editor_gridmanager_options.tinymce.config.setup = function(ed) {
       ed.on('init', function (ed) {
@@ -59,8 +64,34 @@
           /*{text: 'Menu item 2', onclick: function() {ed.insertContent('Menu item 2');}}*/
         ]
       });
+
+      if (profil_bootstrap_editor_gridmanager_options.widgetkit != false) {
+        var widgetkit_widgets = [];
+        $.each(profil_bootstrap_editor_gridmanager_options.widgetkit, function(type_index, type_value) {
+          types = {};
+          types['text'] = type_index;
+          types['menu'] = [];
+          $.each(type_value, function(index, value) {
+            obj = {};
+            obj['text'] = value;
+            obj['onclick'] = function(){ handleTinymceWidgetkitButton(ed, index); }
+            types['menu'].push(obj);
+          });
+          widgetkit_widgets.push(types);
+        });
+        ed.addButton('widgetkit', {
+          type: 'menubutton',
+          text: 'Widgetkit',
+          icon: false,
+          menu: widgetkit_widgets
+        });
+      }
     }
+
     profil_bootstrap_editor_gridmanager_options.tinymce.config.toolbar2 += " | bootstrap";
+    if (profil_bootstrap_editor_gridmanager_options.widgetkit != false) {
+      profil_bootstrap_editor_gridmanager_options.tinymce.config.toolbar2 += " | widgetkit";
+    }
 
     var gm = $(".editor-gridmanager").gridmanager(
       profil_bootstrap_editor_gridmanager_options

@@ -715,10 +715,43 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
 
     $config['root'] = JUri::root();
 
+    $config['widgetkit'] = self::getWidgetkitList();
+
     $doc = JFactory::getDocument();
     // add tinymce js config
     $js = 'var profil_bootstrap_editor_gridmanager_options =' . json_encode( $config ) . ';';
     $doc->addScriptDeclaration($js);
+  }
+
+
+  /**
+   * If Widgetkit is enabled return a list of al widgets to use in gridmanagers tinymce.
+   *
+   * @return  array of widgets or false
+   */
+  public function getWidgetkitList() {
+    if (file_exists(JPATH_ADMINISTRATOR . '/components/com_widgetkit/widgetkit.php') && JComponentHelper::isEnabled('com_widgetkit', true)) {
+      $widget_path = JPATH_ADMINISTRATOR . '/components/com_widgetkit/helpers/widget.php';
+      $widgetkit_path = JPATH_ADMINISTRATOR . '/components/com_widgetkit/widgetkit.php';
+      if (file_exists($widget_path) && file_exists($widgetkit_path)) {
+        require_once($widgetkit_path);
+        require_once($widget_path);
+        // get widgetkit
+        $widgetkit = Widgetkit::getInstance();
+        $widgetKitHelper = new WidgetWidgetkitHelper($widgetkit);
+        $widgets = $widgetKitHelper->all();
+        if (!empty($widgets)) {
+          $result = array();
+          foreach ($widgets as $w_id => $w_value) {
+            $result[$w_value->type][$w_value->id] =  $w_value->name;
+          }
+          return $result;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
   }
 
   /**

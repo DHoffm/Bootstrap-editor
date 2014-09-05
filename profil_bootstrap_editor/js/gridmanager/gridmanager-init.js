@@ -30,6 +30,7 @@
       ed.addButton('bootstrap', {
         type: 'menubutton',
         text: 'Bootstrap',
+        classes: 'widget btn btn-small first last gridmanager_bootstrap',
         icon: false,
         menu: [
           {
@@ -82,6 +83,7 @@
         ed.addButton('widgetkit', {
           type: 'menubutton',
           text: 'Widgetkit',
+          classes: 'widget btn btn-small first last gridmanager_widgetkit',
           icon: false,
           menu: widgetkit_widgets
         });

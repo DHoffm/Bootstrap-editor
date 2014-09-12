@@ -43,6 +43,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
         $tinymce_path = '/media/editors/tinymce/jscripts/tiny_mce/tiny_mce.js';
       }
     } else {
+        JHtml::_('behavior.framework');
         JHtml::_('jquery.framework');
         $tinymce_path = '/media/editors/tinymce/tinymce.min.js';
     }
@@ -779,7 +780,132 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $editor .= '</div>';
     // include hidden textarea for saving the content + bootstrap grid data
     $editor .= '<textarea name="' . $name . '" id="' . $id . '" class="editor-gridmanager-textarea" cols="' . $col . '" rows="' . $row . '" style="width: ' . $width . '; height: ' . $height . ';">' . $content . '</textarea>';
+    $editor .= '<div class="editor-gridmanager-xtd-buttons">' . $this->_displayButtons($id, $buttons, $asset, $author) . '</div>';
     return $editor;
+  }
+
+
+  /**
+   * TinyMCE WYSIWYG Editor - get the editor content
+   *
+   * @param   string  $editor  The name of the editor
+   *
+   * @return  string
+   */
+  public function onGetContent($editor)
+  {
+    return 'tinyMCE.get(\'' . $editor . '\').getContent();';
+  }
+
+  /**
+   * TinyMCE WYSIWYG Editor - set the editor content
+   *
+   * @param   string  $editor  The name of the editor
+   * @param   string  $html    The html to place in the editor
+   *
+   * @return  string
+   */
+  public function onSetContent($editor, $html)
+  {
+    return 'tinyMCE.get(\'' . $editor . '\').setContent(' . $html . ');';
+  }
+
+  /**
+   * Inserts html code into the editor
+   *
+   * @param   string  $name  The name of the editor
+   *
+   * @return  boolean
+   */
+  public function onGetInsertMethod($name)
+  {
+    $doc = JFactory::getDocument();
+
+    $js = "
+      function isBrowserIE()
+      {
+        return navigator.appName==\"Microsoft Internet Explorer\";
+      }
+
+      function jInsertEditorText( text, editor )
+      {
+        if (isBrowserIE())
+        {
+          if (window.parent.tinyMCE)
+          {
+            window.parent.tinyMCE.selectedInstance.selection.moveToBookmark(window.parent.global_ie_bookmark);
+          }
+        }
+        tinyMCE.execCommand('mceInsertContent', false, text);
+      }
+
+      var global_ie_bookmark = false;
+
+      function IeCursorFix()
+      {
+        if (isBrowserIE())
+        {
+          tinyMCE.execCommand('mceInsertContent', false, '');
+          global_ie_bookmark = tinyMCE.activeEditor.selection.getBookmark(false);
+        }
+        return true;
+      }";
+
+    $doc->addScriptDeclaration($js);
+
+    return true;
+  }
+
+  /**
+   * Displays the editor buttons.
+   *
+   * @param   string  $name     The editor name
+   * @param   mixed   $buttons  [array with button objects | boolean true to display buttons]
+   * @param   string  $asset    The object asset
+   * @param   object  $author   The author.
+   *
+   * @return  string HTML
+   */
+  private function _displayButtons($name, $buttons, $asset, $author) {
+    $return = '';
+
+    $args = array(
+      'name'  => $name,
+      'event' => 'onGetInsertMethod'
+    );
+
+    $results = (array) $this->update($args);
+
+    if ($results)
+    {
+      foreach ($results as $result)
+      {
+        if (is_string($result) && trim($result))
+        {
+          $return .= $result;
+        }
+      }
+    }
+
+    if (is_array($buttons) || (is_bool($buttons) && $buttons))
+    {
+      $buttons = $this->_subject->getButtons($name, $buttons, $asset, $author);
+      $image_button = array();
+      foreach($buttons as $b_id => $b_value) {
+        if ($b_value->name != 'arrow-down') {
+          $b_value->class .= " gridmanager-joomla-btn";
+          $gridmanager_buttons[] = $b_value;
+        }
+      }
+      var_dump($buttons);
+      if (!empty($gridmanager_buttons)) {
+        $return .= JLayoutHelper::render('joomla.tinymce.buttons', $gridmanager_buttons);
+      } else {
+        $return .= '';
+      }
+    }
+
+    return $return;
   }
 }
 

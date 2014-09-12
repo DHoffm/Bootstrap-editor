@@ -8,7 +8,7 @@ If you like to test it download the latest version from here:
 
 https://github.com/DHoffm/Bootstrap-editor/raw/master/pkg_profil_bootstrap_editor.zip
 
-Make sure to enable the content plugin after install. This includes the bootstrap css and js on the frontend.
+If you do not use a Bootstrap 3 Template on the Frontend, make sure to enable the content plugin after install. This includes the bootstrap css and js on the frontend.
 
 
 ##The editor supports
@@ -16,6 +16,9 @@ Make sure to enable the content plugin after install. This includes the bootstra
 - Bootstrap 3 Grid (md-col-* classes) (Bootstrap 2 Grid needs some extra effort because of layout issues)
 - Bootstrap Offsets (md-col-offset-* classes)
 - TinyMCE integration (if TinyMCE is not enabled a default textarea fallback is used)
+- the editor integrates Joomla editor-xtd buttons (image, article etc.)
+- the editor integrates Bootstrap 3 button classes in tinymce
+- the editor integrates Widgetkit shortcodes for available slideshows, galleries, accordions, maps or slidesets
 - ID's and classes for each row and columns
 - Sortable rows and columns
 - Joomla 3, (Joomla 2.5 needs some extra efforts on TinyMCE integration)
@@ -26,6 +29,11 @@ You can test the latest editor here: http://neokoenig.github.io/jQuery-gridmanag
 
 A joomla 3 demo page is available here: http://editor.profilpr.de
 
+This plugin was tested with the following template frameworks:
+- Joomla Protostar
+- T3 Framework
+- Gantry
+- Construct
 
 ##ToDo
 

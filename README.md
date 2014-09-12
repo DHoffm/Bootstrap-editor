@@ -2,7 +2,7 @@ Bootstrap-editor
 ================
 
 Gridmanager bootstrap editor integration into Joomla. The editor is based on the work and efforts of Tom King (https://github.com/neokoenig/) and pbreah (https://github.com/pbreah/).
-This editor a Joomla plugin compatible with Joomla 3.0 upwards.
+This editor is a Joomla plugin compatible with Joomla 3.0 upwards.
 
 If you like to test it download the latest version from here:
 
@@ -25,9 +25,11 @@ If you do not use a Bootstrap 3 Template on the Frontend, make sure to enable th
 
 
 ##Demo
-You can test the latest editor here: http://neokoenig.github.io/jQuery-gridmanager/
+You can test the latest gridmanager editor here: http://neokoenig.github.io/jQuery-gridmanager/
 
 A joomla 3 demo page is available here: http://editor.profilpr.de
+
+##Tested Templates/Frameworks
 
 This plugin was tested with the following template frameworks:
 - Joomla Protostar

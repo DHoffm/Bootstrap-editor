@@ -154,6 +154,7 @@
       }
 
       var output = gm.deinitCanvas(true);
+      console.log(output);
       $('.editor-gridmanager-textarea').val(output);
       // remove the absolute urls to use relative urls on the frontend
       gm.gridmanagerRelativeToAbsoluteURLs();

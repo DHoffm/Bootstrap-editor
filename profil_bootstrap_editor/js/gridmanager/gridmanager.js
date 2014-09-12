@@ -409,8 +409,20 @@
         // create output holder
         $('<div id="gm-plain-output"></div>').insertAfter("#" + gm.options.canvasId);
         // copy html to output div
+
+        var content;
+
+        /**
+         * Determine the current edit mode and get the content based upon the resultant
+         * context to prevent content in source mode from being lost on save, as such:
+         *
+         * edit mode (source): canvas.find('textarea').val()
+         * edit mode (visual): canvas.html()
+         */
+        content = gm.mode !== "visual" ? $("#" + gm.options.canvasId + " .row-holder").find('textarea').val() : $("#" + gm.options.canvasId + " .row-holder").html();
+
         $('#gm-plain-output').css('display', 'none');
-        $('#gm-plain-output').html($("#" + gm.options.canvasId + " .row-holder").html());
+        $('#gm-plain-output').html(content);
         var canvas = $('#gm-plain-output');
         var cols = canvas.find(gm.options.colSelector);
         var rows = canvas.find(gm.options.rowSelector);

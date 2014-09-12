@@ -897,7 +897,6 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
           $gridmanager_buttons[] = $b_value;
         }
       }
-      var_dump($buttons);
       if (!empty($gridmanager_buttons)) {
         $return .= JLayoutHelper::render('joomla.tinymce.buttons', $gridmanager_buttons);
       } else {

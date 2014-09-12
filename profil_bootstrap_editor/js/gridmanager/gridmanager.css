@@ -300,3 +300,14 @@
   margin-right: 2px;
   line-height: 20px;
 }
+
+/* size fix for lightbox */
+#sbox-window {
+  -webkit-box-sizing: initial;
+  -moz-box-sizing: initial;
+  box-sizing: initial;
+}
+#sbox-content > iframe {
+  max-height: 100%;
+  max-width: initial;
+}

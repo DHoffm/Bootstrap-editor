@@ -14,7 +14,7 @@
 }
 #gm-canvas {
   min-height: 100px;
-  z-index: 1000;
+  z-index: 90;
   position: relative;
 }
 #gm-canvas .gm-editing {
@@ -96,7 +96,7 @@
     box-shadow: inset 0px 0px 2px 0px rgba(255, 0, 0, 1);*/
 }
 #gm-canvas .gm-editing-active {
-  z-index: 9999;
+  z-index: 99;
   position: relative;
 }
 #gm-canvas div.row.gm-editing, #gm-canvas div.row-fluid.gm-editing {
@@ -182,7 +182,7 @@
   zoom: 1;
   filter: alpha(opacity=20);
   opacity: 0.2;
-  z-index: -9999;
+  z-index: -99;
 }
 .gridbase-col {
   position: relative;

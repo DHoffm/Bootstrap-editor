@@ -43,5 +43,7 @@ This plugin was tested with the following template frameworks:
 - add all Boostrap grid sizes (xs-col-*, sm-col-*, lg-col-*)
 - support Joomla 2.5
 - fully support Bootstrap 2 (generates the Bootstrap tags but displayed incorrectly)
+- tranlate Gridmanager
+- add translation for install package
 - ~~support Bootstrap styles on the editors~~
 - ~~support joomla editors-xtd buttons~~

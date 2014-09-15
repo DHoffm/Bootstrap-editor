@@ -55,11 +55,10 @@
       // Dynamically generated row template buttons
       $.each(gm.options.controlButtons, function(i, val) {
         var _class = gm.generateButtonClass(val);
-        buttons.push("<a title='Add Row " + _class + "' class='" + gm.options.controlButtonClass + " add" + _class + "'><span class='" + gm.options.controlButtonSpanClass + "'></span> " + _class + "</a>");
+        buttons.push("<a title='" + gm.options.addRow + " " + _class + "' class='" + gm.options.controlButtonClass + " add" + _class + "'><span class='" + gm.options.controlButtonSpanClass + "'></span> " + _class + "</a>");
         gm.generateClickHandler(val);
       });
-
-      buttons.push("<a title='Add Readmore' class='" + gm.options.controlButtonClass + " readmore readmore-12'><span class='" + gm.options.controlButtonSpanClass + "'></span>&nbsp;" + gm.options.readmoreTitle + "</a>");
+      buttons.push("<a title='" + gm.options.readmoreTitleInfo + "' class='" + gm.options.controlButtonClass + " readmore readmore-12'><span class='" + gm.options.controlButtonSpanClass + "'></span>&nbsp;" + gm.options.readmoreTitle + "</a>");
       gm.generateReadmoreClickHandler([12]);
 
       /* Generate the control bar markup */
@@ -617,10 +616,10 @@
           .addClass(gm.options.gmFloatLeft)
           .html(classBtns.join("")))
         .append($("<div />").addClass("pull-left").html(
-          $("<label />").html("Row ID ").append(
+          $("<label />").html(gm.options.rowID + " ").append(
             $("<input>").addClass("gm-rowSettingsID").attr({
               type: 'text',
-              placeholder: 'Row ID',
+              placeholder: gm.options.rowID,
               value: row.attr("id")
             })
           )
@@ -662,10 +661,10 @@
             .addClass(gm.options.gmFloatLeft)
             .html(classBtns.join("")))
           .append($("<div />").addClass("pull-left").html(
-            $("<label />").html("col ID ").append(
+            $("<label />").html(gm.options.colID + " ").append(
             $("<input>")
               .addClass("gm-colSettingsID")
-              .attr({type: 'text', placeholder: 'Col ID', value: col.attr("id")})
+              .attr({type: 'text', placeholder: gm.options.colID, value: col.attr("id")})
             )
           ));
 
@@ -1066,8 +1065,12 @@
     rowReadmoreSelector: "div.row-readmore",
     readmoreSelector: "#system-readmore",
     readmoreTitle: "Readmore",
+    readmoreTitleInfo: "Add readmore",
+    addRow: 'Add row',
     // class of background element when sorting rows
     rowSortingClass: "bg-warning",
+
+    rowID: "Row ID",
 
     // Buttons at the top of each row
     rowButtonsPrepend: [{
@@ -1125,6 +1128,7 @@
     // Additional column class to add (foundation needs columns, bs3 doesn't)
     colAdditionalClass: "",
 
+    colID: "Col ID",
     // Buttons to prepend to each column
     colButtonsPrepend: [{
       title: "Make Column Narrower",

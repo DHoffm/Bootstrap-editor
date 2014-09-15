@@ -9,7 +9,7 @@
   <authorUrl>profilpr.de</authorUrl>
   <version>1.0</version>
   <description>PLG_PROFIL_BOOTSTRAP_EDITOR_DESCRIPTION</description>
-  <files>
+  <files folder="site">
     <filename plugin="profil_bootstrap_editor">profil_bootstrap_editor.php</filename>
     <filename>index.html</filename>
     <filename>language/en-GB/en-GB.plg_editors_profil_bootstrap_editor.sys.ini</filename>

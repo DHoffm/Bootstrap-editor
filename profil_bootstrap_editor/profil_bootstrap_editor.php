@@ -31,6 +31,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
    * @since 1.5
    */
   public function onInit() {
+
     $doc = JFactory::getDocument();
 
     JLoader::import( 'joomla.version' );
@@ -711,8 +712,145 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       $config['controlButtons'] = array_values($finalArray);
     }
 
+    /* translation for gridmanager gui */
+
     $config['translations']['defaultColText'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_DEFAULT_COL_TEXT', true);
     $config['defaultColText'] = $config['translations']['defaultColText'];
+
+    $config['translation']['colButtonsPrepend']['narrower'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_BUTTONS_PREPEND_NARROWER', true);
+    $config['translation']['colButtonsPrepend']['wider'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_BUTTONS_PREPEND_WIDER', true);
+    $config['translation']['colButtonsPrepend']['increase_offset'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_BUTTONS_PREPEND_INCREASE_OFFSET', true);
+    $config['translation']['colButtonsPrepend']['decrease_offset'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_BUTTONS_PREPEND_DECREASE_OFFSET', true);
+    $config['translation']['colButtonsPrepend']['col_settings'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_BUTTONS_PREPEND_COL_SETTINGS', true);
+    $config['translation']['colButtonsAppend']['remove_col'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_BUTTONS_APPEND_REMOVE_COL', true);
+
+    $config['translation']['rowButtonsAppend']['remove_row'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_BUTTONS_APPEND_REMOVE_ROW', true);
+    $config['translation']['rowButtonsPrepend']['new_column'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_BUTTONS_PREPEND_NEW_COL', true);
+    $config['translation']['rowButtonsPrepend']['row_settings'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_BUTTONS_PREPEND_ROW_SETTINGS', true);
+
+    $config['translation']['rowReadmorePrepend']['title'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_READMORE_PREPEND_TITLE', true);
+
+    $config['translation']['controlAppend']['source'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_CONTROL_APPEND_BUTTONS_SOURCE', true);
+    $config['translation']['controlAppend']['preview'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_CONTROL_APPEND_BUTTONS_PREVIEW', true);
+    $config['translation']['controlAppend']['grid'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_CONTROL_APPEND_BUTTONS_GRID', true);
+
+    $config['translation']['colID'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_COL_ID', true);
+    $config['translation']['rowID'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_ID', true);
+
+    $config['translation']['readmoreTitleInfo'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_READMORE_TITLE_INFO', true);
+    $config['translation']['addRow'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ADD_ROW', true);
+
+    $config['colButtonsPrepend'] = array();
+    $config['colButtonsAppend'] = array();
+    $config['rowButtonsAppend'] = array();
+    $config['rowReadmoreButtonsAppend'] = array();
+    $config['rowButtonsPrepend'] = array();
+    $config['rowReadmorePrepend'] = array();
+
+    // col narrower button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['colButtonsPrepend']['narrower'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'gm-colDecrease pull-left';
+    $gui_button->iconClass = 'glyphicon glyphicon-minus-sign';
+    $config['colButtonsPrepend'][] = $gui_button;
+
+    // col wider button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['colButtonsPrepend']['wider'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'gm-colIncrease pull-left';
+    $gui_button->iconClass = 'glyphicon glyphicon-plus-sign';
+    $config['colButtonsPrepend'][] = $gui_button;
+
+    // col increase offset button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['colButtonsPrepend']['decrease_offset'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'gm-colDecreaseOffset pull-left';
+    $gui_button->iconClass = 'glyphicon glyphicon-circle-arrow-left';
+    $config['colButtonsPrepend'][] = $gui_button;
+
+    // col increase offset button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['colButtonsPrepend']['increase_offset'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'gm-colIncreaseOffset pull-left';
+    $gui_button->iconClass = 'glyphicon glyphicon-circle-arrow-right';
+    $config['colButtonsPrepend'][] = $gui_button;
+
+    // col settings button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['colButtonsPrepend']['col_settings'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'pull-right gm-colSettings';
+    $gui_button->iconClass = 'glyphicon glyphicon-cog';
+    $config['colButtonsPrepend'][] = $gui_button;
+
+    // col remove button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['colButtonsAppend']['remove_col'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'pull-right gm-removeCol';
+    $gui_button->iconClass = 'glyphicon glyphicon-trash';
+    $config['colButtonsAppend'][] = $gui_button;
+
+    // row remove button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['rowButtonsAppend']['remove_row'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'pull-right gm-removeRow';
+    $gui_button->iconClass = 'glyphicon glyphicon-trash';
+    $config['rowButtonsAppend'][] = $gui_button;
+
+    // row add new col button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['rowButtonsPrepend']['new_column'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'pull-left gm-addColumn';
+    $gui_button->iconClass = 'glyphicon glyphicon-plus';
+    $config['rowButtonsPrepend'][] = $gui_button;
+
+    // row settings button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['rowButtonsPrepend']['row_settings'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'pull-right gm-rowSettings';
+    $gui_button->iconClass = 'glyphicon glyphicon-cog';
+    $config['rowButtonsPrepend'][] = $gui_button;
+
+    // readmore row remove button
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['rowButtonsAppend']['remove_row'];
+    $gui_button->element = 'a';
+    $gui_button->btnClass = 'pull-right gm-removeReadmoreRow';
+    $gui_button->iconClass = 'glyphicon glyphicon-trash';
+    $config['rowReadmoreButtonsAppend'][] = $gui_button;
+
+    // readmore row title
+    $gui_button = new stdClass();
+    $gui_button->title = $config['translation']['rowReadmorePrepend']['title'];
+    $gui_button->element = 'span';
+    $gui_button->btnClass = 'pull-left';
+    $gui_button->iconClass = '';
+    $config['rowReadmorePrepend'][] = $gui_button;
+
+    // title for readmore button beside col buttons
+    $config['readmoreTitle'] = $config['translation']['rowReadmorePrepend']['title'];
+
+    // mode buttons
+    $config['controlAppend'] = "<div class='btn-group pull-right'><button title='" . $config['translation']['controlAppend']['source'] . "' type='button' class='btn btn-xs btn-primary gm-mode'><span class='glyphicon glyphicon-chevron-left'></span><span class='glyphicon glyphicon-chevron-right'></span></button><button title='" . $config['translation']['controlAppend']['preview'] . "' type='button' class='btn btn-xs btn-primary gm-preview'><span class='glyphicon glyphicon-eye-open'></span></button><button title='" . $config['translation']['controlAppend']['grid'] . "' type='button' class='btn btn-xs btn-primary gm-basegrid'><span class='glyphicon glyphicon-align-justify'></span></button></div>";
+
+    // label for col id
+    $config['colID'] = $config['translation']['colID'];
+
+    // label for row id
+    $config['rowID'] = $config['translation']['rowID'];
+
+    $config['readmoreTitleInfo'] = $config['translation']['readmoreTitleInfo'];
+    $config['addRow'] = $config['translation']['addRow'];
+
+    /* end translation for gridmanager gui */
 
     $config['root'] = JUri::root();
 

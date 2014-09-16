@@ -740,6 +740,20 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $config['translation']['readmoreTitleInfo'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_READMORE_TITLE_INFO', true);
     $config['translation']['addRow'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_ADD_ROW', true);
 
+    $config['translation']['bootstrapContextBackground'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_CONTEXT_BACKGROUND', true);
+    $config['translation']['bootstrapButtons'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS', true);
+    $config['translation']['bootstrapButtonsLarge'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_SIZE_LARGE', true);
+    $config['translation']['bootstrapButtonsDefault'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_SIZE_DEFAULT', true);
+    $config['translation']['bootstrapButtonsSmall'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_SIZE_SMALL', true);
+    $config['translation']['bootstrapButtonsExtraSmall'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_SIZE_EXTRA_SMALL', true);
+
+    $config['translation']['bootstrapButtonsStyleDefault'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_STYLE_DEFAULT', true);
+    $config['translation']['bootstrapButtonsStylePrimary'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_STYLE_PRIMARY', true);
+    $config['translation']['bootstrapButtonsStyleSuccess'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_STYLE_SUCCESS', true);
+    $config['translation']['bootstrapButtonsStyleInfo'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_STYLE_INFO', true);
+    $config['translation']['bootstrapButtonsStyleWarning'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_STYLE_WARNING', true);
+    $config['translation']['bootstrapButtonsStyleDanger'] = JText::_('PLG_PROFIL_BOOTSTRAP_EDITOR_BOOTSTRAP_BUTTONS_STYLE_DANGER', true);
+
     $config['colButtonsPrepend'] = array();
     $config['colButtonsAppend'] = array();
     $config['rowButtonsAppend'] = array();

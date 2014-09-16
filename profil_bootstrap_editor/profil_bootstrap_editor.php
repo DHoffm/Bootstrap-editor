@@ -62,9 +62,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.css');
     $bootstrap_mode = (int) $this->params->get('mode', 0);
 
-    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
     // bootstrap 3
     if ($bootstrap_mode != 0) {
+      $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
       $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
     }
   }
@@ -673,8 +673,32 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       $config['colSelector'] = 'div[class*=span]';
       $config['rowClass'] = 'row-fluid';
       $config['rowSelector'] = 'div.row-fluid';
+      $config['bootstrapStyles'] = array();
+      $config['bootstrapStyles']['buttons'] = array();
+      $config['bootstrapStyles']['buttons']['settings'] = array();
+      $config['bootstrapStyles']['buttons']['settings']['enabled'] = true;
+      $config['bootstrapStyles']['buttons']['types'] = array();
+      $config['bootstrapStyles']['types']['buttons']['large'] = 'btn-large';
+      $config['bootstrapStyles']['types']['buttons']['default'] = '';
+      $config['bootstrapStyles']['types']['buttons']['small'] = 'btn-small';
+      $config['bootstrapStyles']['types']['buttons']['extraSmall'] = 'btn-mini';
+      $config['bootstrapStyles']['contextual_backgrounds'] = array();
+      $config['bootstrapStyles']['contextual_backgrounds']['settings'] = array();
+      $config['bootstrapStyles']['contextual_backgrounds']['settings']['enabled'] = false;
     // bootstrap 3, gridmanager default
     } else {
+      $config['bootstrapStyles'] = array();
+      $config['bootstrapStyles']['buttons'] = array();
+      $config['bootstrapStyles']['buttons']['settings'] = array();
+      $config['bootstrapStyles']['buttons']['settings']['enabled'] = true;
+      $config['bootstrapStyles']['buttons']['types'] = array();
+      $config['bootstrapStyles']['types']['buttons']['large'] = 'btn-lg';
+      $config['bootstrapStyles']['types']['buttons']['default'] = '';
+      $config['bootstrapStyles']['types']['buttons']['small'] = 'btn-sm';
+      $config['bootstrapStyles']['types']['buttons']['extraSmall'] = 'btn-xs';
+      $config['bootstrapStyles']['contextual_backgrounds'] = array();
+      $config['bootstrapStyles']['contextual_backgrounds']['settings'] = array();
+      $config['bootstrapStyles']['contextual_backgrounds']['settings']['enabled'] = true;
     }
 
     // check for custom row classes

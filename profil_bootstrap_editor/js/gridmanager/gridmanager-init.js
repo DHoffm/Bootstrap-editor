@@ -54,69 +54,88 @@
           $('#editor-xtd-buttons').append($('.mce-gridmanager-joomla-buttons a.gridmanager-joomla-btn'));
         });
 
-        ed.addButton('bootstrap', {
-          type: 'menubutton',
-          text: 'Bootstrap',
-          classes: 'widget btn btn-small first last gridmanager_bootstrap',
-          icon: false,
-          autofocus: true,
-          menu: [{
-              text: translation.bootstrapButtons,
-              menu: [{
-                text: translation.bootstrapButtonsLarge,
-                menu: [
-                  { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default btn-lg"); } },
-                  { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary btn-lg"); } },
-                  { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success btn-lg"); } },
-                  { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info btn-lg"); } },
-                  { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning btn-lg"); } },
-                  { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger btn-lg"); } }
-                ]
-              }, {
-                text: translation.bootstrapButtonsDefault,
-                menu: [
-                  { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default"); } },
-                  { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary"); } },
-                  { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success"); } },
-                  { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info"); } },
-                  { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning"); } },
-                  { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger"); } }
-                ]
-              }, {
-                text: translation.bootstrapButtonsSmall,
-                menu: [
-                  { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default btn-sm"); } },
-                  { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary btn-sm"); } },
-                  { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success btn-sm"); } },
-                  { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info btn-sm"); } },
-                  { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning btn-sm"); } },
-                  { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger btn-sm"); } }
-                ]
+        var bootstrapMenu = [];
 
-              }, {
-                text: translation.bootstrapButtonsExtraSmall,
-                menu: [
-                  { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default btn-xs"); } },
-                  { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary btn-xs"); } },
-                  { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success btn-xs"); } },
-                  { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info btn-xs"); } },
-                  { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning btn-xs"); } },
-                  { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger btn-xs"); } }
-                ]
-              }]
-            }, {
-              text: translation.bootstrapContextBackground,
+        if (profil_bootstrap_editor_gridmanager_options.bootstrapStyles.buttons.settings.enabled == true) {
+          var buttonTypes = profil_bootstrap_editor_gridmanager_options.bootstrapStyles.buttons.types;
+          var bootstrapButtons = {
+            text: translation.bootstrapButtons,
+            menu: [
+            {
+              text: translation.bootstrapButtonsLarge,
               menu: [
-                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-primary'); }, /* reminder that this is not called on tinymce init but rather when the submenu is visible onPostRender: function() { ... }*/ },
-                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-success'); } },
-                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-info'); } },
-                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-warning'); } },
-                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-danger'); } }
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.large); } }
               ]
-            }
-          ]
-        });
+            }, {
+              text: translation.bootstrapButtonsDefault,
+              menu: [
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger" + buttonTypes.default); } }
+              ]
+            }, {
+              text: translation.bootstrapButtonsSmall,
+              menu: [
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.small); } }
+              ]
 
+            }, {
+              text: translation.bootstrapButtonsExtraSmall,
+              menu: [
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger btn-xs" + buttonTypes.extraSmall); } }
+              ]
+            }]
+          };
+          bootstrapMenu.push(bootstrapButtons);
+        }
+
+        if (profil_bootstrap_editor_gridmanager_options.bootstrapStyles.contextual_backgrounds.settings.enabled == true) {
+          var bootstrapBackgrounds = {
+            text: translation.bootstrapContextBackground,
+            menu: [
+              { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-primary'); }, /* reminder that this is not called on tinymce init but rather when the submenu is visible onPostRender: function() { ... }*/ },
+              { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-success'); } },
+              { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-info'); } },
+              { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-warning'); } },
+              { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-danger'); } }
+            ]
+          };
+          bootstrapMenu.push(bootstrapBackgrounds);
+        }
+        var bootstrapStyles = 0; // Object.keys(bootstrapMenu).length is not supported in IE < 9 therefore use a loop
+        for (i in bootstrapMenu) {
+          if (bootstrapMenu.hasOwnProperty(i)) {
+            bootstrapStyles++;
+          }
+        }
+        if (bootstrapStyles > 0) {
+          ed.addButton('bootstrap', {
+            type: 'menubutton',
+            text: 'Bootstrap',
+            classes: 'widget btn btn-small first last gridmanager_bootstrap',
+            icon: false,
+            autofocus: true,
+            menu: bootstrapMenu
+          });
+        }
         ed.addButton('joomlabuttons', {
           text: 'JoomlaButtons',
           onclick: function() {

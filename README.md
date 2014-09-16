@@ -48,5 +48,4 @@ This plugin was tested with the following template frameworks:
 - ~~support Bootstrap button styles on the editors~~
 - ~~support Bootstrap background styles on the editors~~
 - support Bootstrap image styles on the editors
-
 - ~~support joomla editors-xtd buttons~~

@@ -40,7 +40,7 @@ This plugin was tested with the following template frameworks:
 ##ToDo
 
 - add support for Joomla CodeMirror and CKEditor
-- add all Boostrap grid sizes (xs-col-*, sm-col-*, lg-col-*)
+- add all Boostrap grid sizes (col-xs-*, col-sm-*, col-lg-*)
 - support Joomla 2.5
 - fully support Bootstrap 2 (generates the Bootstrap tags but displayed incorrectly)
 - ~~tranlate Gridmanager~~

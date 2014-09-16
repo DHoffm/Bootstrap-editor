@@ -44,36 +44,139 @@
           menu: [{
               text: 'Buttons',
               menu: [{
-                text: 'Default',
-                onclick: function() {
-                  handleTinymceBootstrapButton(this, ed, "btn-default");
-                }
+                text: 'Large size',
+                menu: [{
+                  text: 'Default',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-default btn-lg");
+                  }
+                }, {
+                  text: 'Primary',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-primary btn-lg");
+                  }
+                }, {
+                  text: 'Success',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-success btn-lg");
+                  }
+                }, {
+                  text: 'Info',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-info btn-lg");
+                  }
+                }, {
+                  text: 'Warning',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-warning btn-lg");
+                  }
+                }, {
+                  text: 'Danger',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-danger btn-lg");
+                  }
+                }]
+                },{
+                text: 'Default size',
+                menu: [{
+                  text: 'Default',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-default");
+                  }
+                }, {
+                  text: 'Primary',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-primary");
+                  }
+                }, {
+                  text: 'Success',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-success");
+                  }
+                }, {
+                  text: 'Info',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-info");
+                  }
+                }, {
+                  text: 'Warning',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-warning");
+                  }
+                }, {
+                  text: 'Danger',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-danger");
+                  }
+                }]
               }, {
-                text: 'Primary',
-                onclick: function() {
-                  handleTinymceBootstrapButton(this, ed, "btn-primary");
-                }
+                text: 'Small size',
+                menu: [{
+                  text: 'Default',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-default btn-sm");
+                  }
+                }, {
+                  text: 'Primary',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-primary btn-sm");
+                  }
+                }, {
+                  text: 'Success',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-success btn-sm");
+                  }
+                }, {
+                  text: 'Info',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-info btn-sm");
+                  }
+                }, {
+                  text: 'Warning',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-warning btn-sm");
+                  }
+                }, {
+                  text: 'Danger',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-danger btn-sm");
+                  }
+                }]
+
               }, {
-                text: 'Success',
-                onclick: function() {
-                  handleTinymceBootstrapButton(this, ed, "btn-success");
-                }
-              }, {
-                text: 'Info',
-                onclick: function() {
-                  handleTinymceBootstrapButton(this, ed, "btn-info");
-                }
-              }, {
-                text: 'Warning',
-                onclick: function() {
-                  handleTinymceBootstrapButton(this, ed, "btn-warning");
-                }
-              }, {
-                text: 'Danger',
-                onclick: function() {
-                  handleTinymceBootstrapButton(this, ed, "btn-danger");
-                }
-              }, ]
+                text: 'Extra small size',
+                menu: [{
+                  text: 'Default',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-default btn-xs");
+                  }
+                }, {
+                  text: 'Primary',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-primary btn-xs");
+                  }
+                }, {
+                  text: 'Success',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-success btn-xs");
+                  }
+                }, {
+                  text: 'Info',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-info btn-xs");
+                  }
+                }, {
+                  text: 'Warning',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-warning btn-xs");
+                  }
+                }, {
+                  text: 'Danger',
+                  onclick: function() {
+                    handleTinymceBootstrapButton(this, ed, "btn-danger btn-xs");
+                  }
+                }]
+              }]
             }
             /*{text: 'Menu item 2', onclick: function() {ed.insertContent('Menu item 2');}}*/
           ]

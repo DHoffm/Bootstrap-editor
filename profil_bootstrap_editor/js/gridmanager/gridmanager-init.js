@@ -12,12 +12,22 @@
         if (state) {
           ed.selection.setContent('<a href="#" class="btn ' + classes + '">' + ed.selection.getContent() + '</a>');
         } else {
-          var content = ed.selection.getContent();
+          var content = $(ed.selection.getNode()).html();
           if ($(ed.selection.getNode()).hasClass("btn")) {
             ed.dom.remove(ed.dom.getParent(ed.selection.getNode(), 'a'));
             ed.selection.setContent(content);
           }
         }
+      }
+
+      function handleTinymceBootstrapButtonState(button, ed, btnStyle, btnSize) {
+        // called when the menu is visible
+        // if the user already clicked inside the editor this check sets the button state initially
+        button.active($(ed.selection.getNode()).hasClass(btnStyle) && $(ed.selection.getNode()).hasClass(btnSize));
+        // check the state again when the user clicks inside the edit area
+        ed.on('click', function(e) {
+          button.active($(ed.selection.getNode()).hasClass(btnStyle) && $(ed.selection.getNode()).hasClass(btnSize));
+        });
       }
 
       function handleTinymceBootstrapContextualBackgrounds(button, ed, cbClass) {
@@ -27,12 +37,22 @@
         if (state) {
           ed.selection.setContent('<p class="' + cbClass + '">' + ed.selection.getContent() + '</p>');
         } else {
-          var content = ed.selection.getContent();
+          var content = $(ed.selection.getNode()).html();
           if ($(ed.selection.getNode()).hasClass(cbClass)) {
             ed.dom.remove(ed.dom.getParent(ed.selection.getNode(), 'p'));
             ed.selection.setContent(content);
           }
         }
+      }
+
+      function handleTinymceBootstrapContextualBackgroundsState(button, ed, cbClass) {
+        // called when the menu is visible
+        // if the user already clicked inside the editor this check sets the button state initially
+        button.active($(ed.selection.getNode()).hasClass(cbClass));
+        // check the state again when the user clicks inside the edit area
+        ed.on('click', function(e) {
+          button.active($(ed.selection.getNode()).hasClass(cbClass));
+        });
       }
 
       function handleTinymceWidgetkitButton(ed, id) {
@@ -64,43 +84,43 @@
             {
               text: translation.bootstrapButtonsLarge,
               menu: [
-                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.large); } },
-                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.large); } },
-                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.large); } },
-                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.large); } },
-                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.large); } },
-                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.large); } }
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.large); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-default", buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.large); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-primary", buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.large); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-success", buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.large); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-info", buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.large); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-warning", buttonTypes.large); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.large); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-danger", buttonTypes.large); } }
               ]
             }, {
               text: translation.bootstrapButtonsDefault,
               menu: [
-                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.default); } },
-                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.default); } },
-                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.default); } },
-                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.default); } },
-                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.default); } },
-                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger" + buttonTypes.default); } }
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.default); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-default", buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.default); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-primary", buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.default); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-success", buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.default); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-info", buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.default); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-warning", buttonTypes.default); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger" + buttonTypes.default); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-danger", buttonTypes.default); } }
               ]
             }, {
               text: translation.bootstrapButtonsSmall,
               menu: [
-                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.small); } },
-                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.small); } },
-                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.small); } },
-                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.small); } },
-                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.small); } },
-                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.small); } }
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.small); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-default", buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.small); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-primary", buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.small); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-success", buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.small); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-info", buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.small); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-warning", buttonTypes.small); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.small); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-danger", buttonTypes.small); } }
               ]
 
             }, {
               text: translation.bootstrapButtonsExtraSmall,
               menu: [
-                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.extraSmall); } },
-                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.extraSmall); } },
-                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.extraSmall); } },
-                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.extraSmall); } },
-                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.extraSmall); } },
-                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger btn-xs" + buttonTypes.extraSmall); } }
+                { text: translation.bootstrapButtonsStyleDefault, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-default " + buttonTypes.extraSmall); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-default", buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-primary " + buttonTypes.extraSmall); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-primary", buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-success " + buttonTypes.extraSmall); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-success", buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-info " + buttonTypes.extraSmall); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-info", buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-warning " + buttonTypes.extraSmall); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-warning", buttonTypes.extraSmall); } },
+                { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapButton(this, ed, "btn-danger " + buttonTypes.extraSmall); }, onPostRender: function() { handleTinymceBootstrapButtonState(this, ed, "btn-danger", buttonTypes.extraSmall); } }
               ]
             }]
           };
@@ -111,11 +131,11 @@
           var bootstrapBackgrounds = {
             text: translation.bootstrapContextBackground,
             menu: [
-              { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-primary'); }, /* reminder that this is not called on tinymce init but rather when the submenu is visible onPostRender: function() { ... }*/ },
-              { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-success'); } },
-              { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-info'); } },
-              { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-warning'); } },
-              { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-danger'); } }
+              { text: translation.bootstrapButtonsStylePrimary, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-primary'); }, onPostRender: function() { handleTinymceBootstrapContextualBackgroundsState(this, ed, 'bg-primary'); } },
+              { text: translation.bootstrapButtonsStyleSuccess, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-success'); }, onPostRender: function() { handleTinymceBootstrapContextualBackgroundsState(this, ed, 'bg-success'); } },
+              { text: translation.bootstrapButtonsStyleInfo, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-info'); }, onPostRender: function() { handleTinymceBootstrapContextualBackgroundsState(this, ed, 'bg-info'); } },
+              { text: translation.bootstrapButtonsStyleWarning, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-warning'); }, onPostRender: function() { handleTinymceBootstrapContextualBackgroundsState(this, ed, 'bg-warning'); } },
+              { text: translation.bootstrapButtonsStyleDanger, onclick: function() { handleTinymceBootstrapContextualBackgrounds(this, ed, 'bg-danger'); }, onPostRender: function() { handleTinymceBootstrapContextualBackgroundsState(this, ed, 'bg-danger'); } }
             ]
           };
           bootstrapMenu.push(bootstrapBackgrounds);
@@ -211,7 +231,6 @@
       }
 
       var output = gm.deinitCanvas(true);
-      console.log(output);
       $('.editor-gridmanager-textarea').val(output);
       // remove the absolute urls to use relative urls on the frontend
       gm.gridmanagerRelativeToAbsoluteURLs();

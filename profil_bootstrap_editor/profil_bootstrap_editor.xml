@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.1" type="plugin" group="editors" method="upgrade">
-  <name>Editor - Profil bootstrap editor</name>
+  <name>Editor - Bootstrap editor</name>
   <author>David Hoffmann</author>
   <creationDate>June 2014</creationDate>
   <copyright>Copyright (c) 2014 Profil PR &amp; Werbeagentur All rights reserved.</copyright>

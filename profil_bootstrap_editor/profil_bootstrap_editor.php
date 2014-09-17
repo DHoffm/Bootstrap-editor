@@ -173,6 +173,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
         }
       }
 
+      // add own bootstrap css here for tinymce to recognize it
+      $tinymce_options['content_css'] .= '"/><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type="text/css">';
+
       $tinymce_options['relative_urls'] = $params->get('relative_urls', '1');
 
       if ($tinymce_options['relative_urls']) {

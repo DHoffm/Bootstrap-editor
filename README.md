@@ -44,7 +44,7 @@ This plugin was tested with the following template frameworks:
 - support Joomla 2.5
 - fully support Bootstrap 2 (generates the Bootstrap tags but displayed incorrectly)
 - ~~tranlate Gridmanager~~
-- add translation for install package
+- ~~add translation for install package~~
 - ~~support Bootstrap button styles on the editors~~
 - ~~support Bootstrap background styles on the editors~~
 - support Bootstrap image styles on the editors

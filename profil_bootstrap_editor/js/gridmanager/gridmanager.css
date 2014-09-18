@@ -68,7 +68,8 @@
 #gm-canvas .row > .gm-tools {
   border-bottom: 1px solid #d8d8d8!important;
 }
-#gm-canvas .row > .gm-tools:last-child {
+
+#gm-canvas .row .gm-tools-last {
   border-bottom: 0!important;
   border-top: 1px solid #d8d8d8!important;
   margin-bottom: -5px;

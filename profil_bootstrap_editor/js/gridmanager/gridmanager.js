@@ -368,14 +368,17 @@
       });
       // Make columns sortable
       rows.sortable({
+        connectWith: ".row-holder " + gm.options.rowSelector,
         items: gm.options.colSelector,
-        axis: 'x',
         handle: "." + gm.options.gmToolClass + ":first-child",
         forcePlaceholderSize: true,
         opacity: 0.7,
         revert: true,
         tolerance: "pointer",
         cursor: "move",
+        over: function(event,ui){
+          ui.placeholder.insertAfter($(this).children('div.' + gm.options.gmToolClass + ':first'));
+        },
         // fixes a bug on t3-framework and protostar: when dragging the last item the item jumps to the left
         helper: function(event, element) {
           var clone = $(element).clone();
@@ -493,7 +496,7 @@
       rows.addClass(gm.options.gmEditClass).prepend(
         gm.toolFactory(gm.options.rowButtonsPrepend)
       ).append(
-        gm.toolFactory(gm.options.rowButtonsAppend)
+        gm.toolFactory(gm.options.rowButtonsAppend, true)
       );
     };
 
@@ -536,7 +539,7 @@
         row.append(gm.createCol(val));
       });
       row.prepend(gm.toolFactory(gm.options.rowButtonsPrepend))
-        .append(gm.toolFactory(gm.options.rowButtonsAppend));
+        .append(gm.toolFactory(gm.options.rowButtonsAppend, true));
       gm.log("++ Created Row");
       return row;
     };
@@ -728,11 +731,14 @@
          Returns an editing div with appropriate btns as passed in
          @btns Array of buttons (see options)
         */
-    gm.toolFactory = function(btns) {
+    gm.toolFactory = function(btns, lastTool) {
       var tools = $("<div/>")
         .addClass(gm.options.gmToolClass)
         .addClass(gm.options.gmClearClass)
         .html(gm.buttonFactory(btns));
+        if (lastTool == true) {
+          tools.addClass(gm.options.gmToolClass + '-last');
+        }
       return tools[0].outerHTML;
     };
 
@@ -789,14 +795,30 @@
         var rows = canvas.find(gm.options.rowSelector);
         // Make columns sortable
         rows.sortable({
+          connectWith: ".row-holder " + gm.options.rowSelector,
           items: gm.options.colSelector,
-          axis: 'x',
-          handle: "." + gm.options.gmToolClass,
+          handle: "." + gm.options.gmToolClass + ":first-child",
           forcePlaceholderSize: true,
           opacity: 0.7,
           revert: true,
           tolerance: "pointer",
-          cursor: "move"
+          cursor: "move",
+          over: function(event,ui){
+            ui.placeholder.insertAfter($(this).children('div.' + gm.options.gmToolClass + ':first'));
+          },
+          // fixes a bug on t3-framework and protostar: when dragging the last item the item jumps to the left
+          helper: function(event, element) {
+            var clone = $(element).clone();
+            var w = $(element).outerWidth();
+            var h = $(element).outerHeight();
+            var top = $(element).position().top;
+            clone.css({
+                'top': top,
+                'width': w+'px',
+                'height': h+'px'
+              });
+            return clone;
+          }
         });
         e.preventDefault();
       });
@@ -820,19 +842,6 @@
         // add readmore row
         } else {
           canvas.prepend(gm.createReadmoreRow(colWidths));
-          //gm.reset();
-          var rows = canvas.find(gm.options.rowSelector);
-          // Make columns sortable
-          rows.sortable({
-            items: gm.options.colSelector,
-            axis: 'x',
-            handle: "." + gm.options.gmToolClass,
-            forcePlaceholderSize: true,
-            opacity: 0.7,
-            revert: true,
-            tolerance: "pointer",
-            cursor: "move"
-          });
         }
         e.preventDefault();
       });

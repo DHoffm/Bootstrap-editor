@@ -62,9 +62,10 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager.css');
     $bootstrap_mode = (int) $this->params->get('mode', 0);
 
+    // we still need to load this for both bootstrap modes because the gridmanager editor gui relies on glyphicons from bootstrap 3
+    $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
     // bootstrap 3
     if ($bootstrap_mode != 0) {
-      $doc->addStyleSheet(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/gridmanager-bootstrap-grid.min.css');
       $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/gridmanager/bootstrap.min.js');
     }
   }
@@ -673,6 +674,8 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     // bootstrap 2, joomla 3.0 default
     if ($bootstrap_mode == 0) {
       $config['colClass'] = 'span';
+      // TODO: find out why joomla is not supporting this, has no effect
+      $config['colOffsetClass'] = 'offset';
       $config['colSelector'] = 'div[class*=span]';
       $config['rowClass'] = 'row-fluid';
       $config['rowSelector'] = 'div.row-fluid';

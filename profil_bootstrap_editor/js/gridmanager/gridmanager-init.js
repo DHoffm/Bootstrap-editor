@@ -2,7 +2,6 @@
 
   $(document).ready(function() {
     if (typeof profil_bootstrap_editor_gridmanager_options.tinymce !== "undefined") {
-
       var translation = profil_bootstrap_editor_gridmanager_options.translation;
 
       function handleTinymceBootstrapButton(button, ed, classes) {

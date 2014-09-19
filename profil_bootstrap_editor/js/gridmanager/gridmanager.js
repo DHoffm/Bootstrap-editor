@@ -54,9 +54,10 @@
       var buttons = [];
       // Dynamically generated row template buttons
       $.each(gm.options.controlButtons, function(i, val) {
-        var _class = gm.generateButtonClass(val);
-        buttons.push("<a title='" + gm.options.addRow + " " + _class + "' class='" + gm.options.controlButtonClass + " add" + _class + "'><span class='" + gm.options.controlButtonSpanClass + "'></span> " + _class + "</a>");
-        gm.generateClickHandler(val);
+        var label = val[0];
+        var _class = gm.generateButtonClass(val[1]);
+        buttons.push("<a title='" + gm.options.addRow + " " + _class + "' class='" + gm.options.controlButtonClass + " add" + _class + "'><span class='" + gm.options.controlButtonSpanClass + "'></span> " + label + " " + _class + "</a>");
+        gm.generateClickHandler(val[1]);
       });
       buttons.push("<a title='" + gm.options.readmoreTitleInfo + "' class='" + gm.options.controlButtonClass + " readmore readmore-12'><span class='" + gm.options.controlButtonSpanClass + "'></span>&nbsp;" + gm.options.readmoreTitle + "</a>");
       gm.generateReadmoreClickHandler([12]);
@@ -368,7 +369,7 @@
       });
       // Make columns sortable
       rows.sortable({
-        connectWith: ".row-holder " + gm.options.rowSelector,
+        connectWith: ".row-holder " + gm.options.rowSelector +":not("+gm.options.rowReadmoreSelector+")",
         items: gm.options.colSelector,
         handle: "." + gm.options.gmToolClass + ":first-child",
         forcePlaceholderSize: true,
@@ -510,7 +511,7 @@
       rows.addClass(gm.options.gmEditClass).prepend(
         gm.genericToolFactory(gm.options.rowReadmorePrepend)
       ).append(
-        gm.toolFactory(gm.options.rowButtonsAppend)
+        gm.toolFactory(gm.options.rowReadmoreButtonsAppend, true)
       );
     };
 
@@ -552,7 +553,7 @@
         row.append(gm.options.readmoreCode);
       });
       row.prepend(gm.genericToolFactory(gm.options.rowReadmorePrepend))
-        .append(gm.toolFactory(gm.options.rowReadmoreButtonsAppend));
+        .append(gm.toolFactory(gm.options.rowReadmoreButtonsAppend, true));
       gm.log("++ Created Row");
       return row;
     };
@@ -795,7 +796,7 @@
         var rows = canvas.find(gm.options.rowSelector);
         // Make columns sortable
         rows.sortable({
-          connectWith: ".row-holder " + gm.options.rowSelector,
+          connectWith: ".row-holder " + gm.options.rowSelector +":not("+gm.options.rowReadmoreSelector+")",
           items: gm.options.colSelector,
           handle: "." + gm.options.gmToolClass + ":first-child",
           forcePlaceholderSize: true,
@@ -806,6 +807,7 @@
           over: function(event,ui){
             ui.placeholder.insertAfter($(this).children('div.' + gm.options.gmToolClass + ':first'));
           },
+
           // fixes a bug on t3-framework and protostar: when dragging the last item the item jumps to the left
           helper: function(event, element) {
             var clone = $(element).clone();
@@ -1025,14 +1027,14 @@
 
     // Array of buttons for row templates
     controlButtons: [
-      [12],
-      [6, 6],
-      [4, 4, 4],
-      [3, 3, 3, 3],
-      [2, 2, 2, 2, 2, 2],
-      [2, 8, 2],
-      [4, 8],
-      [8, 4]
+      ['',[12]],
+      ['',[6, 6]],
+      ['',[4, 4, 4]],
+      ['',[3, 3, 3, 3]],
+      ['',[2, 2, 2, 2, 2, 2]],
+      ['',[2, 8, 2]],
+      ['',[4, 8]],
+      ['',[8, 4]]
     ],
 
     // Default control button class

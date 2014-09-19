@@ -718,7 +718,7 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
       $config['colCustomClasses'] = array_map('trim', explode(',', $col_classes));
     }
 
-    $row_presets = $this->params->get('rowPresets', '[12],[6,6],[4,4,4],[3,3,3,3],[2,2,2,2,2,2],[2,8,2],[4,8],[8,4]');
+    $row_presets = $this->params->get('rowPresets', "['Full';12],['Half';6,6],['Third';4,4,4],['Quarter';3,3,3,3],['Large middle',2,8,2],['Large right';4,8],['Large left';8,4]");
     // remove whitespaces
     $row_presets = trim($row_presets);
     // remove first bracket
@@ -731,7 +731,14 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     $finalArray = array();
     if (!empty($controlButtons)) {
       foreach ($controlButtons as $cKey => $cValue) {
-        $finalArray[] = explode(',', $cValue);
+        $tmpControlButtons = explode(';', $cValue);
+        // get the columns
+        $controlButtonsCols = explode(',', $tmpControlButtons[1]);
+        // add the label
+        $controlButtonsPreset = array(str_replace("'", "", $tmpControlButtons[0]));
+        // combine the results
+        array_push($controlButtonsPreset, $controlButtonsCols);
+        $finalArray[] = $controlButtonsPreset;
       }
     }
 

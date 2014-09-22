@@ -245,7 +245,6 @@
         var to = gm.getColOffsetClass(col);
         var tc = gm.getColClass(col);
         if (to.colOffsetWidth == "") { to.colOffsetWidth = 0; }
-        console.log(parseInt(to.colOffsetWidth, 10) + parseInt(tc.colWidth, 10));
         if ((parseInt(to.colOffsetWidth, 10) + parseInt(tc.colWidth, 10)) < gm.options.colMax) {
           to.colOffsetWidth = (parseInt(to.colOffsetWidth, 10) + parseInt(gm.options.colResizeStep, 10));
           col.switchClass(to.colOffsetClass, gm.options.colOffsetClass + to.colOffsetWidth, 200);
@@ -261,7 +260,7 @@
           width: 'hide',
           height: 'hide'
         }, 400, function() {
-          this.remove();
+          $(this).remove();
         });
       // Remove a row
       }).on("click", "a.gm-removeRow", function() {
@@ -269,7 +268,7 @@
           opacity: 'hide',
           height: 'hide'
         }, 400, function() {
-          this.remove();
+          $(this).remove();
         });
       // remove readmore row
       }).on("click", "a.gm-removeReadmoreRow", function() {
@@ -277,7 +276,7 @@
           opacity: 'hide',
           height: 'hide'
         }, 400, function() {
-          this.remove();
+          $(this).remove();
         });
         $('#gm-addnew .readmore').toggleClass(gm.options.gmDangerClass);
 
@@ -781,7 +780,12 @@
       var canvas = gm.$el.find("#" + gm.options.canvasId + ' .row-holder');
       gm.$el.on("click", string, function(e) {
         gm.log("Clicked " + string);
-        canvas.prepend(gm.createRow(colWidths));
+        if (gm.options.addRowPosition == 'bottom') {
+          canvas.append(gm.createRow(colWidths));
+        // default and 'top' position
+        } else {
+          canvas.prepend(gm.createRow(colWidths));
+        }
         //gm.reset();
         var rows = canvas.find(gm.options.rowSelector);
         // Make columns sortable
@@ -833,11 +837,16 @@
             opacity: 'hide',
             height: 'hide'
           }, 400, function() {
-            this.remove();
+            $(this).remove();
           });
         // add readmore row
         } else {
-          canvas.prepend(gm.createReadmoreRow());
+          if (gm.options.addRowPosition == 'bottom') {
+            canvas.append(gm.createReadmoreRow());
+          // default and 'top' position
+          } else {
+            canvas.prepend(gm.createReadmoreRow());
+          }
         }
         e.preventDefault();
       });
@@ -1214,6 +1223,8 @@
     defaultColText: "<p>Awaiting Content</p>",
     readmoreCode: "<hr id='system-readmore' />",
 
+    // append or prepend new rows
+    addRowPosition: 'bottom', // bottom is possible too
     /*
      Rich Text Editors---------------
   */

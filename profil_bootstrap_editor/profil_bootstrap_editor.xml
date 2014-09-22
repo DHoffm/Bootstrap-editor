@@ -32,6 +32,10 @@
         </field>
         <field name="rowClasses" type="text" required="false" default="example-class, test-class" label="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_CLASSES_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_CLASSES_DESCRIPTION" />
         <field name="rowPresets" type="text" required="false" default="['Full';12],['Half';6,6],['Third';4,4,4],['Quarter';3,3,3,3],['Large middle';2,8,2],['Large right';4,8],['Large left';8,4]" label="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_PRESETS_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_PRESETS_DESCRIPTION" />
+        <field name="addRowPosition" type="radio" default="top" label="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_ADD_POSITION_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_ADD_POSITION_DESCRIPTION">
+          <option value="top">PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_ADD_POSITION_TOP</option>
+          <option value="bottom">PLG_PROFIL_BOOTSTRAP_EDITOR_ROW_ADD_POSITION_BOTTOM</option>
+        </field>
         <field name="colClasses" type="text" required="false" default="example-class, test-class" label="PLG_PROFIL_BOOTSTRAP_EDITOR_COL_CLASSES_LABEL" description="PLG_PROFIL_BOOTSTRAP_EDITOR_COL_CLASSES_DESCRIPTION" />
       </fieldset>
     </fields>

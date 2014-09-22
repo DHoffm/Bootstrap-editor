@@ -44,9 +44,9 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
         $tinymce_path = '/media/editors/tinymce/jscripts/tiny_mce/tiny_mce.js';
       }
     } else {
-        JHtml::_('behavior.framework');
-        JHtml::_('jquery.framework');
-        $tinymce_path = '/media/editors/tinymce/tinymce.min.js';
+      JHtml::_('behavior.framework');
+      JHtml::_('jquery.framework');
+      $tinymce_path = '/media/editors/tinymce/tinymce.min.js';
     }
 
     $doc->addScript(JURI::root() . '/plugins/editors/profil_bootstrap_editor/js/jquery-ui.min.js');
@@ -674,7 +674,8 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
     // bootstrap 2, joomla 3.0 default
     if ($bootstrap_mode == 0) {
       $config['colClass'] = 'span';
-      // TODO: find out why joomla is not supporting this, has no effect
+      // TODO: joomla isis admin template set margin-left via .row-fluid [class*="span"] { margin-left: 15px; } which overrides the offset class margins
+      // not sure how to deal with it at the moment
       $config['colOffsetClass'] = 'offset';
       $config['colSelector'] = 'div[class*=span]';
       $config['rowClass'] = 'row-fluid';
@@ -712,6 +713,12 @@ class plgEditorprofil_bootstrap_editor extends JPlugin {
 
     if (!empty($row_classes)) {
       $config['rowCustomClasses'] = array_map('trim', explode(',', $row_classes));
+    }
+
+    // check for custom col classes
+    $addRowPosition = $this->params->get('addRowPosition', 'top');
+    if (!empty($addRowPosition)) {
+      $config['addRowPosition'] = $addRowPosition;
     }
 
     // check for custom col classes

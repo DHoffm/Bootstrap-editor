@@ -1224,7 +1224,7 @@
     readmoreCode: "<hr id='system-readmore' />",
 
     // append or prepend new rows
-    addRowPosition: 'bottom', // bottom is possible too
+    addRowPosition: 'top', // bottom is possible too
     /*
      Rich Text Editors---------------
   */

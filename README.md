@@ -36,10 +36,10 @@ If you do not use a Bootstrap 3 Template on the Frontend, make sure to enable th
 ###Configuration
 
 The plugin has some configurations which can be found on the plugin settings page under extensions > plugin manager > Editor - Bootstrap editor
-a) You can define which bootstrap mode is used (either 2 or 3, 3 is recommended).
-b) You can define css classes for rows and columns which you can select on the editor
-c) You can define the position where new rows will be added (either at the top or the bottom)
-d) You can define row presets int e following form: ['LABEL';WIDTH],['Half';WIDTH,WIDTH],...
+* You can define which bootstrap mode is used (either 2 or 3, 3 is recommended).
+* You can define css classes for rows and columns which you can select on the editor
+* You can define the position where new rows will be added (either at the top or the bottom)
+* You can define row presets int e following form: ['LABEL';WIDTH],['Half';WIDTH,WIDTH],...
 Example: ['Full';12],['Half';6,6],...
 
 ###Additional notes

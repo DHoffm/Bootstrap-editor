@@ -46,11 +46,6 @@ Example: ['Full';12],['Half';6,6],...
 
 Be aware that there is no auto conversion of your preexisting article content to bootstrapped content!
 
-##Demo
-You can test the latest gridmanager editor here: http://neokoenig.github.io/jQuery-gridmanager/
-
-A joomla 3 demo page is available here: http://editor.profilpr.de
-
 ##Tested Templates/Frameworks
 
 This plugin was tested with the following template frameworks:
